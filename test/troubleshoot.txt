@@ -1,0 +1,10 @@
+when it outputs b \n \r 
+or smething like that
+
+
+steps to fix? :
+close eclipse vscode powershell
+program fpga
+generate bsp build project
+run through eclipse
+
