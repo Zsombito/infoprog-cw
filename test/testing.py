@@ -15,7 +15,8 @@ def readJtag():
     
     while(True):
         initial_line = initial_line.decode("utf-8")
-        line = initial_line[2:][:-5]
+        line = initial_line
+        #[2:][:-5]
         #print(hex_to_dec(line))
         #print(type(line))
         print("this is the initial line", initial_line)
