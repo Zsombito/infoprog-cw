@@ -14,20 +14,17 @@ def readJtag():
     output = subprocess.Popen('C:\\intelFPGA_lite\\18.0\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
     
     while(True):
-        initial_line = str(output.stdout.readline())
-        if len(initial_line) > 14 or len(initial_line) < 8:
-            continue
-        else:
-            line = initial_line[2:][:-5]
-            #print(hex_to_dec(line))
-            #print(type(line))
-            print("this is the initial line", initial_line)
-            print("this is the line ", line)
-            print("this is the type ",type(line))
-            print("this is the length ",len(line))
-            # print("this is the int", int(line, 16))
-            print("this is the int ",hex_to_dec(line))
-            time.sleep(0.5)
+        initial_line = initial_line.decode("utf-8")
+        line = initial_line[2:][:-5]
+        #print(hex_to_dec(line))
+        #print(type(line))
+        print("this is the initial line", initial_line)
+        print("this is the line ", line)
+        print("this is the type ",type(line))
+        print("this is the length ",len(line))
+        # print("this is the int", int(line, 16))
+        print("this is the int ",hex_to_dec(line))
+        time.sleep(0.5)
         
 def main():
     readJtag()
