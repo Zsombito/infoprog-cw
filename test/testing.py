@@ -11,22 +11,24 @@ def hex_to_dec(h):
 
 def readJtag():
 
-    output = subprocess.Popen('C:\\intelFPGA_lite\\18.0\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
+    output = subprocess.Popen('B:\\Quartus\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
     
     while(True):
-        initial_line = str(output.stdout.readline())
-        if len(initial_line) > 14 or len(initial_line) < 8:
-            continue
-        else:
-            line = initial_line[2:][:-5]
+        #initial_line = str(output.stdout.readline())
+        #if len(initial_line) > 14 or len(initial_line) < 8:
+            #continue
+        #else:
+            #line = initial_line[2:][:-5]
             #print(hex_to_dec(line))
             #print(type(line))
-            print("this is the initial line", initial_line)
+            line = output.stdout.readline()
+            line = line.decode("utf-8")
+            #print("this is the initial line", initial_line)
             print("this is the line ", line)
             print("this is the type ",type(line))
             print("this is the length ",len(line))
             # print("this is the int", int(line, 16))
-            print("this is the int ",hex_to_dec(line))
+            #print("this is the int ",int(line, 16))
             time.sleep(0.5)
         
 def main():
