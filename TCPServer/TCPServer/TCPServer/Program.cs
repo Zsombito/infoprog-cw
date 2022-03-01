@@ -11,7 +11,7 @@ namespace TCPServer
         private static ASCIIEncoding asen = new ASCIIEncoding();
         static void Main(string[] args)
         {
-            ipadr = IPAddress.Parse("146.169.160.78");
+            ipadr = IPAddress.Parse("192.168.0.14");
 
             
             Socket client1 = Start_Server(ipadr, 24000);
@@ -19,9 +19,11 @@ namespace TCPServer
             while (true)
             {
                 Console.WriteLine("Waiting on data");
-                Recieve_data(client1);
-                Send_data(client1, x.ToString());
-                x++;
+                string s = Recieve_data(client1);
+                string[] data = s.Split('|');
+
+                s += ";1|" + Convert.ToString(-1 * Convert.ToDouble(data[1]))+ "|" + (-1 * Convert.ToDouble(data[2])) + "|0|0|0|0|10";
+                Send_data(client1, s);
             }
         }
         private static string Recieve_data(Socket s)

@@ -14,12 +14,16 @@ public class TCPClient : MonoBehaviour
     private static int port;
     private static ASCIIEncoding asen = new ASCIIEncoding();
     // Start is called before the first frame update
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
     void Start()
     {
         try
         {   
             
-            host = "146.169.160.78";
+            host = "192.168.0.14";
             port = 24000;
             client = new TcpClient();
             client.Connect(host, port);
@@ -30,17 +34,7 @@ public class TCPClient : MonoBehaviour
         catch (Exception e) { Debug.Log("Connection failed: " + e.StackTrace); }
 
     }
-
-    // Update is called once per frame
-    void Update()
-    {   
-        Send_Update("Sajt");
-        
-        Debug.Log("The server responded: " + Get_Update());
-        
-    }
-
-    public string Get_Update()
+    public static string Get_Update()
     {
         string s = "";
         byte[] data_recieved = new byte[250];
@@ -52,7 +46,7 @@ public class TCPClient : MonoBehaviour
         Debug.Log("Messege recieved: " + s);
         return s;
     }
-    public void Send_Update(string data)
+    public static  void Send_Update(string data)
     {
         byte[] encodedMsg = asen.GetBytes(data);
         networkStream.Write(encodedMsg, 0, encodedMsg.Length);
