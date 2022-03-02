@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = TCPServer
+build_property.ProjectDir = C:\GitHub\infoprog-cw\TCPServer\TCPServer\TCPServer\
