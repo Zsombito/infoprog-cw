@@ -9,17 +9,44 @@ public class GameManager : MonoBehaviour
     private static List<Damage> attacks;
     private static int localPlayerIndex;
     private static int p;
+    public List<GameObject> players;
+    public GameObject localPlayer;
+    public GameObject remotePlayer;
     // Start is called before the first frame update
     private void Awake()
     {
         DontDestroyOnLoad(this);
+        
     }
     void Start()
     {
         p_Datas = new P_data[2];
-        p_Datas[1] = new P_data();
-        localPlayerIndex = 0;
         attacks = new List<Damage>();
+        players = new List<GameObject>();
+        localPlayerIndex = Convert.ToInt32(TCPClient.Get_Update());
+        p_Datas[0] = new P_data();
+        p_Datas[1] = new P_data();
+        for (int i = 0; i < 2; i++)
+        {
+            Debug.Log("Generating players");
+            Debug.Log("Local player id: " + localPlayerIndex);
+            
+            if(i == localPlayerIndex)
+            {
+                var p = Instantiate(localPlayer, new Vector3(i*5, 0, 0), Quaternion.identity);
+                Player geci = p.GetComponent<Player>();
+                geci.playerId = i;
+                Debug.Log("Local player created!");
+            }
+            else
+            {
+                var p = Instantiate(remotePlayer, new Vector3(i*5, 0, 0), Quaternion.identity);
+                Mob geci = p.GetComponent<Mob>();
+                geci.playerId = i;
+            }
+        }
+
+        
     }
     
     // Update is called once per frame
@@ -28,10 +55,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("Sending player data!");
         
         TCPClient.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString());
-        TCPClient.Send_Update(Generate_Attack_Packet());
+        //TCPClient.Send_Update(Generate_Attack_Packet());
+        float deltaT = Time.time;
         Load_Player_Data(TCPClient.Get_Update());
-        Load_Attack_Data(TCPClient.Get_Update());
-        Render_Attacks();
+        Debug.Log("It took " + (Time.time - deltaT) + " seconds to retrive packet");
+        //Load_Attack_Data(TCPClient.Get_Update());
+        //Render_Attacks();
         
         
      }

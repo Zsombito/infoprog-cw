@@ -17,23 +17,20 @@ public class TCPClient : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
-    }
-    void Start()
-    {
         try
-        {   
-            
+        {
+
             host = "192.168.0.14";
             port = 24000;
             client = new TcpClient();
             client.Connect(host, port);
             networkStream = client.GetStream();
             Debug.Log("Connecting");
-            
+
         }
         catch (Exception e) { Debug.Log("Connection failed: " + e.StackTrace); }
-
     }
+
     public static string Get_Update()
     {
         string s = "";

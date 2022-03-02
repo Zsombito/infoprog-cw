@@ -24,7 +24,7 @@ public class Hit : Collidable
         base.Update();
         if (stage == maxStages)
             GameObject.Destroy(gameObject);
-        Debug.Log(Time.time - lastTime);
+        //Debug.Log(Time.time - lastTime);
         if(Time.time - lastTime >= (float)(lasting / maxStages))
         {
             stage++;
