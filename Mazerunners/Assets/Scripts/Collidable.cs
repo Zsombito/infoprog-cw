@@ -6,8 +6,9 @@ using UnityEngine;
 public class Collidable : MonoBehaviour
 {
     public ContactFilter2D filter;
-    private BoxCollider2D boxCollider;
-    private Collider2D[] hits ;
+    protected BoxCollider2D boxCollider;
+    protected Collider2D[] hits ;
+    
     // Start is called before the first frame update
     protected virtual void Start()
     {

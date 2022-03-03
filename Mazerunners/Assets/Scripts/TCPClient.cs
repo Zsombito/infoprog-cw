@@ -17,23 +17,20 @@ public class TCPClient : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
-    }
-    void Start()
-    {
         try
-        {   
-            
+        {
+
             host = "192.168.0.14";
             port = 24000;
             client = new TcpClient();
             client.Connect(host, port);
             networkStream = client.GetStream();
             Debug.Log("Connecting");
-            
+
         }
         catch (Exception e) { Debug.Log("Connection failed: " + e.StackTrace); }
-
     }
+
     public static string Get_Update()
     {
         string s = "";
@@ -43,13 +40,14 @@ public class TCPClient : MonoBehaviour
         {
             s += Convert.ToChar(data_recieved[i]);
         }
-        Debug.Log("Messege recieved: " + s);
+        //Debug.Log("Messege recieved: " + s);
         return s;
     }
+    
     public static  void Send_Update(string data)
     {
         byte[] encodedMsg = asen.GetBytes(data);
         networkStream.Write(encodedMsg, 0, encodedMsg.Length);
-        Debug.Log("Client transmitting!");
+       // Debug.Log("Client transmitting!");
     }
 }

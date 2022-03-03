@@ -3,85 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour
+public class Player : Controlled_Mob
 {
-    protected int playerId;
-    protected P_data info;
-    protected int health;
-    protected Vector3 moveDelta;
-    protected Vector3 moveActual;
-    protected bool isControlled;
-    protected BoxCollider2D boxCollider;
-    protected RaycastHit2D hit;
-    // Start is called before the first frame update
-    protected void Start()
+    protected float attackCd;
+    protected float lastAttacked;
+    protected Vector2 facing;
+    protected override Vector2 Get_Control()
     {
-        info = new P_data();
-        
-        boxCollider = GetComponent<BoxCollider2D>();
-        info.playerId = GameManager.Get_PlayerIndex();
-        playerId = info.playerId;
-        info.Health = 10;
-        info.Position =  Vector3.zero;
-        info.Direction = Vector3.zero;
-        Debug.Log("Got index of: " + info.playerId);
-        if(info.playerId == 0)
-        {
-            isControlled = true;
-        }
+        Vector2 direction =  new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (direction != Vector2.zero)
+            facing = direction.normalized;
+        return direction;
     }
-
-    // Update is called once per frame
-    protected void FixedUpdate()
+    protected override void Start()
     {
-        if(isControlled == true)
+        base.Start();
+        immunityTime = 0.5F;
+    }
+    protected override void Update()
+    {
+        base.Update();
+        GameManager.Set_LocalPlayerInfo(info);
+        if(Time.time - lastAttacked >= attackCd)
         {
-            float x = Input.GetAxisRaw("Horizontal");
-            float y = Input.GetAxisRaw("Vertical");
-            moveDelta = new Vector3(x * 2.5F, y * 2.5F, 0);
-            moveActual = Vector3.zero;
-            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Blocking"));
-
-            if (hit.collider == null)
+            if(Input.GetKeyDown(KeyCode.Space))
             {
-                hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime * 4.5F), LayerMask.GetMask("Player"));
-                if (hit.collider == null)
-                    moveActual.y = moveDelta.y * Time.deltaTime;
-                else
-                    moveActual.y = 0;
+                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 2F), facing, 1, 25F, "PlayerAttack", false);
+                GameManager.Attack(d);
             }
-            else
-            {
-                moveActual.y = 0;
-            }
-            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask( "Blocking"));
-
-            if (hit.collider == null)
-            {
-                hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime * 2.5F), LayerMask.GetMask("Player"));
-                if (hit.collider == null)
-                    moveActual.x = moveDelta.x * Time.deltaTime;
-                else
-                    moveActual.x = 0;
-            }       
-            else
-            {
-                moveActual.x = 0;
-            }
-            info.Position = transform.position + moveActual;
-            info.Direction = moveActual;
-            GameManager.Set_LocalPlayerInfo(info);
-            
-
         }
         
+    }
+    
+    
 
-    }
-    protected void LateUpdate()
-    {
-        Debug.Log("Getting player update for player" + playerId);
-        info = GameManager.Get_PlayerInfo(playerId);
-        transform.position = info.Position;
-        health = info.Health;
-    }
+
 }
