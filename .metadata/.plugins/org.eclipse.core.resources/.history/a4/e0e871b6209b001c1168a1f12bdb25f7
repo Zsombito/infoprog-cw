@@ -109,7 +109,8 @@ int main() {
 		//alt_printf("%x\n",y_read);
 		//alt_printf("%x\n",z_read);
 		//printf("%i \n",movingAVG(x_read));
-		//while (clock() < start + 50);
+		clock_t start = clock();
+		while (clock() < start + 500);
 
 	}
 

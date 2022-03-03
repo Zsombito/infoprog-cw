@@ -6,10 +6,9 @@
 #include "sys/alt_irq.h"
 #include <stdlib.h>
 #include <sys/alt_stdio.h>
-#include <time.h>
+
 #include "alt_types.h"
 #include "sys/times.h"
-
 
 #define OFFSET -32
 #define PWM_PERIOD 16
@@ -109,7 +108,7 @@ int main() {
 		//alt_printf("%x\n",y_read);
 		//alt_printf("%x\n",z_read);
 		//printf("%i \n",movingAVG(x_read));
-		//while (clock() < start + 50);
+		delay(500);
 
 	}
 

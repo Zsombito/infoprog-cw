@@ -13,7 +13,7 @@ Program Header:
     LOAD off    0x000022c4 vaddr 0x000112c4 paddr 0x00011450 align 2**12
          filesz 0x0000018c memsz 0x0000018c flags rw-
     LOAD off    0x000025dc vaddr 0x000115dc paddr 0x000115dc align 2**12
-         filesz 0x00000000 memsz 0x000001c4 flags rw-
+         filesz 0x00000000 memsz 0x00000174 flags rw-
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -27,9 +27,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   4 .rwdata       0000018c  000112c4  00011450  000022c4  2**2
                   CONTENTS, ALLOC, LOAD, DATA, SMALL_DATA
-  5 .bss          000001c4  000115dc  000115dc  000025dc  2**2
+  5 .bss          00000174  000115dc  000115dc  000025dc  2**2
                   ALLOC, SMALL_DATA
-  6 .onchip_memory 00000000  000117a0  000117a0  00002450  2**0
+  6 .onchip_memory 00000000  00011750  00011750  00002450  2**0
                   CONTENTS
   7 .comment      00000023  00000000  00000000  00002450  2**0
                   CONTENTS, READONLY
@@ -80,7 +80,7 @@ SYMBOL TABLE:
 00011298 l    d  .rodata	00000000 .rodata
 000112c4 l    d  .rwdata	00000000 .rwdata
 000115dc l    d  .bss	00000000 .bss
-000117a0 l    d  .onchip_memory	00000000 .onchip_memory
+00011750 l    d  .onchip_memory	00000000 .onchip_memory
 00000000 l    d  .comment	00000000 .comment
 00000000 l    d  .debug_aranges	00000000 .debug_aranges
 00000000 l    d  .debug_info	00000000 .debug_info
@@ -127,7 +127,7 @@ SYMBOL TABLE:
 00000000 l    df *ABS*	00000000 memcmp.c
 000115fc g     O .bss	00000004 alt_instruction_exception_handler
 00010eac g     F .text	0000002c alt_main
-000116a0 g     O .bss	00000100 alt_irq
+00011650 g     O .bss	00000100 alt_irq
 00011450 g       *ABS*	00000000 __flash_rwdata_start
 000105e4 g     F .text	0000004c printf
 000101bc g     F .text	00000038 sys_timer_isr
@@ -144,12 +144,12 @@ SYMBOL TABLE:
 000111f4 g     F .text	00000074 alt_exception_cause_generated_bad_addr
 000105a8 g     F .text	0000003c _printf_r
 000104ec g     F .text	00000064 .hidden __udivsi3
-00011600 g     O .bss	00000050 avgx
+00011600 g     O .bss	00000028 avgx
 00011438 g     O .rwdata	00000004 alt_max_fd
 00010d38 g     F .text	00000094 alt_irq_register
-00011650 g     O .bss	00000050 avgy
+00011628 g     O .bss	00000028 avgy
 00011428 g     O .rwdata	00000004 _global_impure_ptr
-000117a0 g       *ABS*	00000000 __bss_end
+00011750 g       *ABS*	00000000 __bss_end
 000115ec g     O .bss	00000004 alt_irq_active
 000100fc g     F .exceptions	00000060 alt_irq_handler
 00011400 g     O .rwdata	00000028 alt_dev_null
@@ -163,7 +163,7 @@ SYMBOL TABLE:
 000112c4 g       *ABS*	00000000 __ram_rodata_end
 000115e0 g     O .bss	00000001 led
 00010550 g     F .text	00000058 .hidden __umodsi3
-000117a0 g       *ABS*	00000000 end
+00011750 g       *ABS*	00000000 end
 0001015c g     F .exceptions	00000024 alt_instruction_exception_entry
 00020000 g       *ABS*	00000000 __alt_stack_pointer
 00010f68 g     F .text	00000034 altera_avalon_jtag_uart_write
@@ -177,7 +177,7 @@ SYMBOL TABLE:
 00011298 g       *ABS*	00000000 __ram_rodata_start
 0001104c g     F .text	00000058 alt_up_accelerometer_spi_read_y_axis
 00011268 g     F .text	00000030 memcmp
-000117a0 g       *ABS*	00000000 __alt_stack_base
+00011750 g       *ABS*	00000000 __alt_stack_base
 00011108 g     F .text	0000006c alt_dev_llist_insert
 00010be4 g     F .text	000000b8 __sfvwrite_small_dev
 000115dc g       *ABS*	00000000 __bss_start
@@ -196,7 +196,7 @@ SYMBOL TABLE:
 00010020 g       *ABS*	00000000 __ram_exceptions_start
 00010f9c g     F .text	00000008 alt_up_accelerometer_spi_open_dev
 00011450 g       *ABS*	00000000 _edata
-000117a0 g       *ABS*	00000000 _end
+00011750 g       *ABS*	00000000 _end
 00010180 g       *ABS*	00000000 __ram_exceptions_end
 00010478 g     F .text	00000074 .hidden __modsi3
 000110a4 g     F .text	00000058 alt_up_accelerometer_spi_read_z_axis
@@ -447,7 +447,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_irq_pending (void)
 #else
         alt_irq[i].handler(alt_irq[i].context, i); 
    1010c:	04000074 	movhi	r16,1
-   10110:	8405a804 	addi	r16,r16,5792
+   10110:	84059404 	addi	r16,r16,5712
 
   active = alt_irq_pending ();
 
@@ -570,7 +570,7 @@ Disassembly of section .text:
     movhi r3, %hi(__bss_end)
    10198:	00c00074 	movhi	r3,1
     ori r3, r3, %lo(__bss_end)
-   1019c:	18c5e814 	ori	r3,r3,6048
+   1019c:	18c5d414 	ori	r3,r3,5968
 
     beq r2, r3, 1f
    101a0:	10c00326 	beq	r2,r3,101b0 <_start+0x30>
@@ -654,7 +654,7 @@ int movingAVGx(alt_32 readVal){
 	alt_32 average = 0;
 
 	for (int i = 1; i < N; i++){
-   10208:	01c01304 	movi	r7,76
+   10208:	01c00904 	movi	r7,36
 		avgx[i-1] = avgx[i];
    1020c:	19400017 	ldw	r5,0(r3)
    10210:	1251883a 	add	r8,r2,r9
@@ -698,11 +698,11 @@ int movingAVGx(alt_32 readVal){
 	}
 	avgx[N-1] = readVal;
    10234:	10858004 	addi	r2,r2,5632
-   10238:	11001315 	stw	r4,76(r2)
+   10238:	11000915 	stw	r4,36(r2)
 	average += avgx[N-1];
 
 	return average/N;
-   1023c:	01400504 	movi	r5,20
+   1023c:	01400284 	movi	r5,10
    10240:	3109883a 	add	r4,r6,r4
    10244:	00103f40 	call	103f4 <__divsi3>
 
@@ -714,7 +714,7 @@ int movingAVGx(alt_32 readVal){
 00010254 <movingAVGy>:
 int movingAVGy(alt_32 readVal){
    10254:	00c00074 	movhi	r3,1
-   10258:	18c59504 	addi	r3,r3,5716
+   10258:	18c58b04 	addi	r3,r3,5676
    1025c:	0005883a 	mov	r2,zero
 
 	alt_32 average = 0;
@@ -729,7 +729,7 @@ int movingAVGy(alt_32 readVal){
 	alt_32 average = 0;
 
 	for (int i = 1; i < N; i++){
-   10268:	01c01304 	movi	r7,76
+   10268:	01c00904 	movi	r7,36
 		avgy[i-1] = avgy[i];
    1026c:	19400017 	ldw	r5,0(r3)
    10270:	1251883a 	add	r8,r2,r9
@@ -772,12 +772,12 @@ int movingAVGy(alt_32 readVal){
 		average += avgy[i-1];
 	}
 	avgy[N-1] = readVal;
-   10294:	10859404 	addi	r2,r2,5712
-   10298:	11001315 	stw	r4,76(r2)
+   10294:	10858a04 	addi	r2,r2,5672
+   10298:	11000915 	stw	r4,36(r2)
 	average += avgy[N-1];
 
 	return average/N;
-   1029c:	01400504 	movi	r5,20
+   1029c:	01400284 	movi	r5,10
    102a0:	3109883a 	add	r4,r6,r4
    102a4:	00103f40 	call	103f4 <__divsi3>
 }
@@ -973,7 +973,7 @@ int main() {
    103c4:	2104ac04 	addi	r4,r4,4784
    103c8:	00105e40 	call	105e4 <printf>
    103cc:	003fe806 	br	10370 <__alt_data_end+0xffff0370>
-
+		//while (clock() < start + 50);
 
 	}
 
@@ -1637,7 +1637,7 @@ static ALT_INLINE alt_irq_context ALT_ALWAYS_INLINE
     alt_irq[id].handler = handler;
    10d50:	200490fa 	slli	r2,r4,3
    10d54:	02000074 	movhi	r8,1
-   10d58:	4205a804 	addi	r8,r8,5792
+   10d58:	42059404 	addi	r8,r8,5712
    10d5c:	4085883a 	add	r2,r8,r2
    10d60:	11800015 	stw	r6,0(r2)
     alt_irq[id].context = context;

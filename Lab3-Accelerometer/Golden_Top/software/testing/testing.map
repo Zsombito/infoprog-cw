@@ -64,8 +64,8 @@ Common symbol       size              file
 
 alt_irq             0x100             ../testing_bsp/\libhal_bsp.a(alt_irq_handler.o)
 errno               0x4               c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libsmallc.a(lib_a-int_errno.o)
-avgx                0x50              obj/default/led_acceleromter_main.o
-avgy                0x50              obj/default/led_acceleromter_main.o
+avgx                0x28              obj/default/led_acceleromter_main.o
+avgy                0x28              obj/default/led_acceleromter_main.o
 led                 0x1               obj/default/led_acceleromter_main.o
 level               0x4               obj/default/led_acceleromter_main.o
 
@@ -403,7 +403,7 @@ LOAD c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nio
                 0x0000000000011450                PROVIDE (__ram_rwdata_end, ABSOLUTE (.))
                 0x0000000000011450                PROVIDE (__flash_rwdata_start, LOADADDR (.rwdata))
 
-.bss            0x00000000000115dc      0x1c4
+.bss            0x00000000000115dc      0x174
                 0x00000000000115dc                __bss_start = ABSOLUTE (.)
                 [!provide]                        PROVIDE (__sbss_start, ABSOLUTE (.))
                 [!provide]                        PROVIDE (___sbss_start, ABSOLUTE (.))
@@ -463,22 +463,22 @@ LOAD c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nio
  .bss           0x0000000000011600        0x0 ../testing_bsp/\libhal_bsp.a(alt_instruction_exception_entry.o)
  .bss           0x0000000000011600        0x0 c:/intelfpga_lite/18.1/nios2eds/bin/gnu/h-x86_64-mingw32/bin/../lib/gcc/nios2-elf/5.3.0/../../../../../H-x86_64-mingw32/nios2-elf/lib/mno-hw-mul\libsmallc.a(lib_a-memcmp.o)
  *(COMMON)
- COMMON         0x0000000000011600       0xa0 obj/default/led_acceleromter_main.o
+ COMMON         0x0000000000011600       0x50 obj/default/led_acceleromter_main.o
                 0x0000000000011600                avgx
-                0x0000000000011650                avgy
- COMMON         0x00000000000116a0      0x100 ../testing_bsp/\libhal_bsp.a(alt_irq_handler.o)
-                0x00000000000116a0                alt_irq
-                0x00000000000117a0                . = ALIGN (0x4)
-                0x00000000000117a0                __bss_end = ABSOLUTE (.)
+                0x0000000000011628                avgy
+ COMMON         0x0000000000011650      0x100 ../testing_bsp/\libhal_bsp.a(alt_irq_handler.o)
+                0x0000000000011650                alt_irq
+                0x0000000000011750                . = ALIGN (0x4)
+                0x0000000000011750                __bss_end = ABSOLUTE (.)
 
-.onchip_memory  0x00000000000117a0        0x0
+.onchip_memory  0x0000000000011750        0x0
                 [!provide]                        PROVIDE (_alt_partition_onchip_memory_start, ABSOLUTE (.))
  *(.onchip_memory .onchip_memory. onchip_memory.*)
-                0x00000000000117a0                . = ALIGN (0x4)
+                0x0000000000011750                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_alt_partition_onchip_memory_end, ABSOLUTE (.))
-                0x00000000000117a0                _end = ABSOLUTE (.)
-                0x00000000000117a0                end = ABSOLUTE (.)
-                0x00000000000117a0                __alt_stack_base = ABSOLUTE (.)
+                0x0000000000011750                _end = ABSOLUTE (.)
+                0x0000000000011750                end = ABSOLUTE (.)
+                0x0000000000011750                __alt_stack_base = ABSOLUTE (.)
                 [!provide]                        PROVIDE (_alt_partition_onchip_memory_load_addr, LOADADDR (.onchip_memory))
 
 .stab
