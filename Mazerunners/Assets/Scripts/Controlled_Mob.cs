@@ -18,6 +18,7 @@ public class Controlled_Mob : Mob
     protected override void Start()
     {
         base.Start();
+        lastHit = Time.time;
         
     }
     protected override void Update()
@@ -69,27 +70,33 @@ public class Controlled_Mob : Mob
         if (Time.time - lastHit >= immunityTime)
         {
             //Cause dmg
+            Debug.Log("Damage caused");
             info.Health -= dmg.dmgAmount;
             if (info.Health <= 0)
             {
                 Death();
             }
-            Knockback(dmg);
+            isHit = true;
             lastHit = Time.time;
+            Knockback(dmg);
+            
         }
         currentHit = dmg;
     }
     public virtual Vector2 Knockback(Damage dmg)
     {
-
+        
         if (Time.time - lastHit >= 0.3F)
         {
             isHit = false;
             currentHit = null;
+            Debug.Log("Knocback over");
             return Vector2.zero;
+            
         }
         else
         {
+            Debug.Log("Knocback");
             Vector2 knockBack;
             if (dmg.direction == Vector2.zero)
                 knockBack = new Vector2(mytransform.position.x - dmg.origin.x, mytransform.position.y - dmg.origin.y).normalized * dmg.pushForce;

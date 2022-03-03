@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public List<GameObject> players;
     public GameObject localPlayer;
     public GameObject remotePlayer;
+    private static int numberOfPlayers;
+    public static int NumberOfPlayers { get { return numberOfPlayers; } }
+    public static int LocalPlayerIndex { get { return localPlayerIndex; } }
     // Start is called before the first frame update
     private void Awake()
     {
@@ -20,14 +23,18 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        p_Datas = new P_data[2];
+        string[] initalData = TCPClient.Get_Update().Split('|');
+        numberOfPlayers = Convert.ToInt32(initalData[0]);
+        Debug.Log("The amount of players: " + numberOfPlayers);
+        p_Datas = new P_data[numberOfPlayers];
         attacks = new List<Damage>();
         players = new List<GameObject>();
-        localPlayerIndex = Convert.ToInt32(TCPClient.Get_Update());
-        p_Datas[0] = new P_data();
-        p_Datas[1] = new P_data();
-        for (int i = 0; i < 2; i++)
+        localPlayerIndex = Convert.ToInt32(initalData[1]);
+        Debug.Log("Got local player id: " + localPlayerIndex);
+        
+        for (int i = 0; i < p_Datas.Length; i++)
         {
+            p_Datas[i] = new P_data();
             Debug.Log("Generating players");
             Debug.Log("Local player id: " + localPlayerIndex);
             
@@ -36,6 +43,7 @@ public class GameManager : MonoBehaviour
                 var p = Instantiate(localPlayer, new Vector3(i*5, 0, 0), Quaternion.identity);
                 Player geci = p.GetComponent<Player>();
                 geci.playerId = i;
+                geci.name = "LocalPlayer";
                 Debug.Log("Local player created!");
             }
             else
@@ -43,6 +51,7 @@ public class GameManager : MonoBehaviour
                 var p = Instantiate(remotePlayer, new Vector3(i*5, 0, 0), Quaternion.identity);
                 Mob geci = p.GetComponent<Mob>();
                 geci.playerId = i;
+                geci.name = "Player" + i.ToString();
             }
         }
 
@@ -52,14 +61,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
      void Update()
      {
-        Debug.Log("Sending player data!");
+        //Debug.Log("Sending player data!");
         
-        TCPClient.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString());
-        //TCPClient.Send_Update(Generate_Attack_Packet());
+        TCPClient.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString() + "$" + Generate_Attack_Packet());
+        
         float deltaT = Time.time;
-        Load_Player_Data(TCPClient.Get_Update());
-        Debug.Log("It took " + (Time.time - deltaT) + " seconds to retrive packet");
-        //Load_Attack_Data(TCPClient.Get_Update());
+        string[] data = TCPClient.Get_Update().Split('$');
+        Load_Player_Data(data[0]);
+        //Debug.Log("It took " + (Time.time - deltaT) + " seconds to retrive packet");
+        Render_Attacks(data[1]);
         //Render_Attacks();
         
         
@@ -72,34 +82,49 @@ public class GameManager : MonoBehaviour
         p++;
         return p - 1;
     }
-    private static string Generate_Attack_Packet()
-    {
-        string msg = "";
-        while(attacks.Count != 0)
-        {
-            msg += attacks[0].Get_String();
-            attacks.RemoveAt(0);
-        }
-        return msg;
-            
-    }
+
     private static void Load_Player_Data(string msg)
     {
         string[] data = msg.Split(';');
         for (int i = 0; i < p_Datas.Length; i++)
         {
-            Debug.Log("Setting player" + i + " value: " + data[i]);
+            //Debug.Log("Setting player" + i + " value: " + data[i]);
             p_Datas[i].Set_Values(data[i]);
 
         }
     }
-    private static void Load_Attack_Data(string msg)
+    private static string Generate_Attack_Packet()
     {
-        string[] data = msg.Split(';');
-        for(int i = 0; i < data.Length; i++)
-            attacks.Add(new Damage(data[i]));
+        string msg = "";
+        if (attacks.Count == 0)
+            return "nothing";
+        else
+        {
+            while (attacks.Count != 0)
+            {
+                msg += attacks[0].Get_String() + ";";
+                attacks.RemoveAt(0);
+            }
+            return msg;
+        }
+
     }
-    private static void Render_Attacks() { }
+    private static void Render_Attacks(string data)
+    {
+        if (data != "nothing")
+        {
+            Debug.Log(data);
+            string[] dataAttacks = data.Split(';');
+            
+            for (int i = 0; i < dataAttacks.Length; i++)
+            {
+                Damage d = new Damage(dataAttacks[i]);
+                GameObject obj = Resources.Load<GameObject>("Prefabs/" + d.type);
+                var p = Instantiate(obj, d.origin, Quaternion.identity);
+                p.GetComponent<Hit>().damage = d;
+            }
+        }
+    }
     
 
 

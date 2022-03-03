@@ -12,17 +12,25 @@ namespace TCPServer
         private static IPAddress ipadr;
         private static ASCIIEncoding asen = new ASCIIEncoding();
         private static List<Socket> clients;
+        private static int numberOfPlayers;
         static void Main(string[] args)
         {
+            numberOfPlayers = 1;
             clients = new List<Socket>();
             ipadr = IPAddress.Parse("192.168.0.14");
+            Start_Server(ipadr, 24000) ;
 
-            Socket client = Start_Server(ipadr, 24000);
-            clients.Add(client);
-            clients.Add(myListener.AcceptSocket());
-           // clients.Add(myListener.AcceptSocket());
+            for(int i = 0; i < numberOfPlayers; i++)
+            {
+                clients.Add(myListener.AcceptSocket());
+                Console.WriteLine("Succesfully connected to: " + clients[i].RemoteEndPoint);
+            }
+            Console.WriteLine("Connected to all players, initial values to players");
             for (int i = 0; i < clients.Count; i++)
-                Send_data(clients[i], i.ToString()); 
+            {
+                Send_data(clients[i], (numberOfPlayers.ToString() + "|" + i.ToString()));
+                
+            }
             while (true)
             {
                 Update_GameState();
@@ -31,16 +39,22 @@ namespace TCPServer
         private static void Update_GameState()
         {
             string player_data = "";
+            string attack_data = "";
             for (int i = 0; i < clients.Count; i++)
-                player_data += Recieve_data(clients[i]) + ";";
-           /* string attack_data = "";
-            for (int i = 0; i < clients.Count; i++)
-                attack_data += Recieve_data(clients[i]) + ";";
-           */
+            {
+                string[] data = Recieve_data(clients[i]).Split('$');
+                player_data += data[0] + ";";
+                if (data[1] != "nothing")
+                    attack_data += data[1] + ";";
+            }
+            if (attack_data == "")
+                attack_data = "nothing";
+            string send_data = player_data + "$" + attack_data;
            for(int i = 0; i < clients.Count; i++)
            {
-                Send_data(clients[i], player_data);
+                Send_data(clients[i], send_data);
            }
+           
                 
         }
         private static string Recieve_data(Socket s)
@@ -61,14 +75,13 @@ namespace TCPServer
             s.Send(msg);
             Console.WriteLine("Msg sent");
         }
-        private static Socket Start_Server(IPAddress ip, int port)
+        private static void Start_Server(IPAddress ip, int port)
         {
             myListener = new TcpListener(ip, 24000);
             myListener.Start();
             Console.WriteLine("Server is running!");
-            Socket s = myListener.AcceptSocket();
-            Console.WriteLine("Connected to: " + s.RemoteEndPoint);
-            return s;
+            
+            
         }
     }
 }

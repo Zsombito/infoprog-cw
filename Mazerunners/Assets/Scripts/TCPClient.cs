@@ -40,13 +40,14 @@ public class TCPClient : MonoBehaviour
         {
             s += Convert.ToChar(data_recieved[i]);
         }
-        Debug.Log("Messege recieved: " + s);
+        //Debug.Log("Messege recieved: " + s);
         return s;
     }
+    
     public static  void Send_Update(string data)
     {
         byte[] encodedMsg = asen.GetBytes(data);
         networkStream.Write(encodedMsg, 0, encodedMsg.Length);
-        Debug.Log("Client transmitting!");
+       // Debug.Log("Client transmitting!");
     }
 }

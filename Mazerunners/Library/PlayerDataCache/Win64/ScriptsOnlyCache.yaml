@@ -57,6 +57,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 5100}
     - Class: 114
       Script: {instanceID: 5500}
+    - Class: 114
+      Script: {instanceID: 5560}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -178,7 +180,7 @@ ScriptsOnlyBuild:
     className: Text
   - hash:
       serializedVersion: 2
-      Hash: 0c9431efd37020718e686d789302f1a8
+      Hash: fddf74b5bfcf6daac8308a1e8f3b642b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Hit
@@ -620,12 +622,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: TouchInputModule
-  - hash:
-      serializedVersion: 2
-      Hash: 6fb6d511ec1b9d6bcd568dfbfcd59e3c
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Damage
   - hash:
       serializedVersion: 2
       Hash: 762a30c8d779b11af16ed9ce1f2d32fa

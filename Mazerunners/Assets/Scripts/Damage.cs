@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Damage : MonoBehaviour
+public class Damage 
 {
     public Vector2 origin;
     public Vector2 direction;
@@ -34,14 +34,11 @@ public class Damage : MonoBehaviour
     public string Get_String()
     {
         string s = "";
-        s += origin.x + "|" + origin.y + "|";
-        s += direction.x + "|" + direction.y + "|";
-        s += dmgAmount + "|" + pushForce + "|" + type + "|";
-        if (friendly == true)
-            s += "1;";
-        else
-            s += "0;";
+        s += ((double)origin.x).ToString() + "|" + ((double)origin.y).ToString() + "|";
+        s += ((double)direction.x).ToString() + "|" + ((double)direction.y).ToString() + "|";
+        s += dmgAmount + "|" + pushForce + "|" + type + "|" + friendly.ToString();
         return s;
+        
         
     }
     
