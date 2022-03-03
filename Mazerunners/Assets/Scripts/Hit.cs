@@ -10,7 +10,7 @@ public class Hit : Collidable
     public int maxStages;
     public int stage;
     public float lastTime;
-    public Damage damage;
+    public Damage damage ;
     public Player player;
     protected override void Start()
     {
@@ -21,6 +21,7 @@ public class Hit : Collidable
         player = p.GetComponent<Player>();
         stage = 0;
         
+
     }
     protected override void Update()
     {
@@ -40,7 +41,8 @@ public class Hit : Collidable
     protected override void OnCollide(Collider2D coll)
     {
         base.OnCollide(coll);
-        if (coll.name == "LocalPlayer")
+        Debug.Log("Trying to hurt");
+        if (coll.name == "LocalPlayer" && damage.owner != GameManager.LocalPlayerIndex)
             player.Hit(damage);
     }
     

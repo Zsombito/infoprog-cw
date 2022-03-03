@@ -13,7 +13,7 @@ public class Player : Controlled_Mob
         Vector2 direction =  new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (direction != Vector2.zero)
             facing = direction.normalized;
-        return direction;
+        return direction * 5F;
     }
     protected override void Start()
     {
@@ -28,7 +28,7 @@ public class Player : Controlled_Mob
         {
             if(Input.GetKeyDown(KeyCode.Space))
             {
-                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 2F), facing, 1, 25F, "PlayerAttack", false);
+                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 2F), facing, 1, 5F, "PlayerAttack", false, GameManager.LocalPlayerIndex);
                 GameManager.Attack(d);
             }
         }
