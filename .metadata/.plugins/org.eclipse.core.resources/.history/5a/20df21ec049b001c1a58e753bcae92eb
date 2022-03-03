@@ -12,7 +12,7 @@
 
 #define OFFSET -32
 #define PWM_PERIOD 16
-#define N 20
+#define N 2
 
 alt_8 pwm = 0;
 alt_u8 led;
@@ -51,6 +51,17 @@ int movingAVGy(alt_32 readVal){
 
 void sys_timer_isr() {
 	IOWR_ALTERA_AVALON_TIMER_STATUS(TIMER_BASE, 0);
+
+	if (pwm < abs(level)) {
+
+		if (level < 0) {
+			led_write(led << 1);
+		} else {
+			led_write(led >> 1);
+		}
+	} else {
+		led_write(led);
+	}
 
 	if (pwm > PWM_PERIOD) {
 		pwm = 0;

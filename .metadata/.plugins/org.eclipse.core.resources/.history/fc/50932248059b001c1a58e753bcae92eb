@@ -12,7 +12,7 @@
 
 #define OFFSET -32
 #define PWM_PERIOD 16
-#define N 20
+#define N 2
 
 alt_8 pwm = 0;
 alt_u8 led;

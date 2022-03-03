@@ -12,7 +12,7 @@
 
 #define OFFSET -32
 #define PWM_PERIOD 16
-#define N 20
+#define N 2
 
 alt_8 pwm = 0;
 alt_u8 led;
@@ -27,12 +27,12 @@ int movingAVGx(alt_32 readVal){
 
 	for (int i = 1; i < N; i++){
 		avgx[i-1] = avgx[i];
-		average += avgx[i-1];
+		average += (1.0/N)*avgx[i-1];
 	}
 	avgx[N-1] = readVal;
-	average += avgx[N-1];
+	average += (1.0/N)*avgx[N-1];
 
-	return average/N;
+	return average;
 
 }
 int movingAVGy(alt_32 readVal){
@@ -41,16 +41,60 @@ int movingAVGy(alt_32 readVal){
 
 	for (int i = 1; i < N; i++){
 		avgy[i-1] = avgy[i];
-		average += avgy[i-1];
+		average += (1.0/N)*avgy[i-1];
 	}
 	avgy[N-1] = readVal;
-	average += avgy[N-1];
+	average += (1.0/N)*avgy[N-1];
 
+	return average;
+
+}
+
+alt_32 movingAVG2(alt_32 readVal){
+
+	alt_32 average = 0;
+
+	for (int i = 1; i < N; i++){
+		avgx[i-1] = avgx[i];
+		average += avgx[i-1];
+	}
+	avgx[N-1] = readVal;
+	average += avgx[N-1];
 	return average/N;
 }
 
+void led_write(alt_u8 led_pattern) {
+	IOWR(LED_BASE, 0, led_pattern);
+}
+
+// led_pattern = 10 bits, each corresponds to a value
+
+void convert_read(alt_32 acc_read, int * level, alt_u8 * led) {
+
+	alt_32 acc = movingAVGx(acc_read);
+
+	alt_printf("VALUE: %x ", acc);
+
+	alt_u8 val = (acc >> 6) & 0x07; // 00000111
+	* led = (8 >> val) | (8 << (8 - val));
+	* level = (acc >> 1) & 0x1f; // 00011111
+}
+
+
+
 void sys_timer_isr() {
 	IOWR_ALTERA_AVALON_TIMER_STATUS(TIMER_BASE, 0);
+
+	if (pwm < abs(level)) {
+
+		if (level < 0) {
+			led_write(led << 1);
+		} else {
+			led_write(led >> 1);
+		}
+	} else {
+		led_write(led);
+	}
 
 	if (pwm > PWM_PERIOD) {
 		pwm = 0;
@@ -95,15 +139,13 @@ int main() {
 		sw=IORD(SWITCH_BASE,0);
 		button=IORD(BUTTON_BASE,0);
 
-		IOWR(LED_BASE,0, sw);
-
 		alt_up_accelerometer_spi_read_x_axis(acc_dev, & x_read);
 		alt_up_accelerometer_spi_read_y_axis(acc_dev, & y_read);
 		//alt_up_accelerometer_spi_read_z_axis(acc_dev, & z_read);
 		//alt_printf("X AXIS = %x || Y AXIS = %x || Z AXIS = %x \n",movingAVG2(x_read),movingAVG2(y_read),movingAVG2(z_read));
-		if ((sw & 0x01)==1){
+		//if ((sw & 0x01)==1){
 		   printf("%d|%d\n",movingAVGx(x_read),movingAVGy(y_read));
-		}
+		//}
 
 		//alt_printf("%x\n",y_read);
 		//alt_printf("%x\n",z_read);
