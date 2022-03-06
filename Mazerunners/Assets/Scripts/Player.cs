@@ -28,7 +28,7 @@ public class Player : Controlled_Mob
         {
             if(Input.GetKeyDown(KeyCode.Space))
             {
-                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 2F), facing, 1, 5F, "PlayerAttack", false, GameManager.LocalPlayerIndex );
+                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 2F), facing, 1, 5F, "PlayerAttack", false, GameManager.LocalPlayerIndex);
                 GameManager.Attack(d);
             }
         }
