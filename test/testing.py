@@ -1,5 +1,9 @@
+from mimetypes import init
+from stat import IO_REPARSE_TAG_MOUNT_POINT
 import subprocess
 import time
+
+threshold = 50
 
 def hex_to_dec(h): 
     msb_neg = '89abcdef'
@@ -8,75 +12,52 @@ def hex_to_dec(h):
         h_dec -= 2**24
     return h_dec
 
+def holdfor3(val3):
+    sum = val3[0]+val3[1]+val3[2]
+    avg = sum/3
+    if avg > threshold:
+        return (1)
+    elif avg < (-1*threshold):
+        return (-1)
+    else:
+        return (0)
+    
+
 
 def readJtag():
-    counter = 0
-    output = subprocess.Popen('B:\\Quartus\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
-    x_data = 0
-    y_data = 0
-    z_data = 0
+    holdfor3x = []
+    holdfor3y = []
+    output = subprocess.Popen('C:\\intelFPGA_lite\\18.0\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
+    
     while(True):
         initial_line = output.stdout.readline()
-        if len(initial_line) < 14:
-            """
-            line = output.stdout.readline()
-            line = line.decode("utf-8")
+        initial_line = initial_line.decode("utf8")
+        initial_line = initial_line[:initial_line.find("\r\n")]
+        readings = initial_line.split("|",1)
+        if(len(initial_line)<11 and len(initial_line)>1):
+            # print("x =",readings[0], "|| y =",readings[1])
 
-            line1 = output.stdout.readline()
-            line1 = line1.decode("utf-8")
-            
-            line2 = output.stdout.readline()
-            line2 = line2.decode("utf-8")
-            """
-            if counter>3:
-                counter = 1
-            counter = counter + 1
+            x_data = int(readings[0])
+            y_data = int(readings[1])
+            if(len(holdfor3x)<3):
+                holdfor3x.append(x_data)
+            else:
+                print("x ", holdfor3(holdfor3x))
+                holdfor3x = []
+                
 
-            line = output.stdout.readline()
-            line = line.decode("utf-8")
-            
+            if(len(holdfor3y)<3):
+                holdfor3y.append(y_data)
+            else:
+                print("y ", holdfor3(holdfor3y))
+                holdfor3y = []
 
-            if line[0] == "x":
-                x_data = line[2:]
-            elif line[0] == "z":
-                z_data = line[2:]
-            elif line[0] == "y":
-                y_data = line[2:]
-            
-            if counter==3:
-                print("x=",x_data,"y=",y_data, "z=", z_data)
-                time.sleep(0.5)
-            #line = output.stdout.readline()
-            #line = line.decode("utf-8")
-            #y_data = line
-
-            #line = output.stdout.readline()
-            #line = line.decode("utf-8")
-            #z_data = line
-            
-            #if(x_data):
-                #print("this is the line ", x_data)
-                #print("this is the int", int(x_data, 16), " in our func", hex_to_dec(x_data))
-            #print(hex_to_dec(line))
-            #print("this is the type ",type(line))
-            #print("this is the length ",len(line))
-            #time.sleep(0.5)
-
-
-        #initial_line = str(output.stdout.readline())
-        #if len(initial_line) > 14 or len(initial_line) < 8:
-            #continue
-        #else:
-            #line = initial_line[2:][:-5]
-            #print(hex_to_dec(line))
-            #print(type(line))
-            
-            #print("this is the initial line", initial_line)
-            
-            # print("this is the int", int(line, 16))
-            #print("this is the int ",int(line, 16))
+        #print(type(initial_line))
+        #print(len(initial_line)
+        #time.sleep(0.0001)
         
-        
+#len of negative values is "10", no.of hex bits shown is 8
+#len of positive values is "4",  no.of hex bits shown is 2
 def main():
     readJtag()
 
