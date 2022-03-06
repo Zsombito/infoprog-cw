@@ -20,7 +20,7 @@ public class TCPClient : MonoBehaviour
         try
         {
 
-            host = "192.168.0.238";
+            host = "192.168.0.11";
             port = 24000;
             client = new TcpClient();
             client.Connect(host, port);
