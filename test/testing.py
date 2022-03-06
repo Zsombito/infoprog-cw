@@ -27,8 +27,8 @@ def holdfor3(val3):
 def readJtag():
     holdfor3x = []
     holdfor3y = []
-    output = subprocess.Popen('C:\\intelFPGA_lite\\18.0\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
-    
+    #output = subprocess.Popen('C:\\intelFPGA_lite\\18.0\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
+    output = subprocess.Popen('B:\\Quartus\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
     while(True):
         initial_line = output.stdout.readline()
         initial_line = initial_line.decode("utf8")
