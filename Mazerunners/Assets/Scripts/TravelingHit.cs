@@ -12,14 +12,14 @@ public class TravelingHit : Hit
     {
         base.Update();
         Vector2 moveDelta = Vector2.zero;
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0,damage.direction.y), Mathf.Abs(damage.direction.y * Time.deltaTime), LayerMask.GetMask("Blocking"));
+        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0,damage.direction.y), Mathf.Abs(damage.direction.y * Time.deltaTime), LayerMask.GetMask("Blocking", "Player"));
         if (hit.collider == null)
             moveDelta.y = damage.direction.y * Time.deltaTime * speed;
         else if (isBouncy == true)
             damage.direction.y = -damage.direction.y;
         else
             GameObject.Destroy(gameObject);
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, damage.direction.x), Mathf.Abs(damage.direction.x * Time.deltaTime), LayerMask.GetMask("Blocking"));
+        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, damage.direction.x), Mathf.Abs(damage.direction.x * Time.deltaTime), LayerMask.GetMask("Blocking", "Player"));
         if (hit.collider == null)
             moveDelta.x = damage.direction.x * Time.deltaTime * speed;
         else if (isBouncy == true)

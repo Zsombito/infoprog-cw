@@ -121,7 +121,10 @@ public class GameManager : MonoBehaviour
                 Damage d = new Damage(dataAttacks[i]);
                 GameObject obj = Resources.Load<GameObject>("Prefabs/" + d.type);
                 var p = Instantiate(obj, d.origin, Quaternion.identity);
-                p.GetComponent<Hit>().damage = d;
+                if (d.isTravelling == false)
+                    p.GetComponent<Hit>().damage = d;
+                else
+                    p.GetComponent<TravelingHit>().damage = d;
             }
         }
     }

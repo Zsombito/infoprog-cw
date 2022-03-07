@@ -14,13 +14,13 @@ public class TCPClient : MonoBehaviour
     private static int port;
     private static ASCIIEncoding asen = new ASCIIEncoding();
     // Start is called before the first frame update
-    private void Awake()
+    private void Start()
     {
         DontDestroyOnLoad(this);
         try
         {
 
-            host = "192.168.0.11";
+            host = "192.168.0.162";
             port = 24000;
             client = new TcpClient();
             client.Connect(host, port);

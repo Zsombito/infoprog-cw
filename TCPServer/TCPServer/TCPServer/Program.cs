@@ -17,7 +17,7 @@ namespace TCPServer
         {
             numberOfPlayers = 1;
             clients = new List<Socket>();
-            ipadr = IPAddress.Parse("192.168.0.11");
+            ipadr = IPAddress.Parse("192.168.0.162");
             Start_Server(ipadr, 24000) ;
 
             for(int i = 0; i < numberOfPlayers; i++)

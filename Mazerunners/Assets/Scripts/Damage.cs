@@ -12,7 +12,8 @@ public class Damage
     public float dmgAmount;
     public float pushForce;
     public int owner;
-    public Damage(Vector2 _origin, Vector2 _direction, float _amount, float _pushForce, string _type, bool _friendly, int _originate_from)
+    public bool isTravelling;
+    public Damage(Vector2 _origin, Vector2 _direction, float _amount, float _pushForce, string _type, bool _friendly, int _originate_from, bool _isTravelling)
     {
         this.origin = _origin;
         this.direction = _direction;
@@ -21,6 +22,7 @@ public class Damage
         this.type = _type;
         this.friendly = _friendly;
         this.owner = _originate_from;
+        this.isTravelling = _isTravelling;
     }
     public Damage(string data)
     {
@@ -32,6 +34,7 @@ public class Damage
         this.type = traits[6];
         this.friendly = Convert.ToBoolean(traits[7]);
         this.owner = Convert.ToInt32(traits[8]);
+        this.isTravelling = Convert.ToBoolean(traits[9]);
 
     }
     public string Get_String()
@@ -39,7 +42,7 @@ public class Damage
         string s = "";
         s += ((double)origin.x).ToString() + "|" + ((double)origin.y).ToString() + "|";
         s += ((double)direction.x).ToString() + "|" + ((double)direction.y).ToString() + "|";
-        s += dmgAmount + "|" + pushForce + "|" + type + "|" + friendly.ToString() + "|" + owner.ToString();
+        s += dmgAmount + "|" + pushForce + "|" + type + "|" + friendly.ToString() + "|" + owner.ToString() + "|" + isTravelling.ToString();
         return s;
         
         
