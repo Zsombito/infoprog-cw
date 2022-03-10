@@ -5,105 +5,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //needed:
-    public static GameManager instance;
-    public event Action<P_data, bool> onPlayerDataUpdate;
-    private  P_data[] p_Datas;
-    private int localPlayerIndex;
-    public bool isHost;
+    private static P_data[] p_Datas;
+    private static List<Damage> attacks;
+    private static int localPlayerIndex;
+    private static int p;
+    bool isSet;
+    public List<GameObject> players;
     public GameObject localPlayer;
     public GameObject remotePlayer;
-    public GameObject Gamestart;
-    private int numberOfPlayers;
-
-    private  List<Damage> attacks;
-    private  int p;
-    
-    
-    
-    public  int NumberOfPlayers { get { return numberOfPlayers; } }
-    public  int LocalPlayerIndex { get { return localPlayerIndex; } }
+    private static int numberOfPlayers;
+    public static int NumberOfPlayers { get { return numberOfPlayers; } }
+    public static int LocalPlayerIndex { get { return localPlayerIndex; } }
     // Start is called before the first frame update
     private void Awake()
     {
-        instance = this;
-       // DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this);
         
-    }
-    public void StartGame(bool isHost, int numberOfPlayers, int localPlayerId, P_data[] playerDatas)
-    {
-        TCPClient.instance.onMessageRecieve += RecieveServerCommand;
-        this.isHost = isHost;
-        this.numberOfPlayers = numberOfPlayers;
-        this.localPlayerIndex = localPlayerId;
-        Debug.Log("Starting players: " + isHost + " " + numberOfPlayers + " " + localPlayerId );
-        for (int i = 0; i < numberOfPlayers; i++)
-        {
-            if (i == localPlayerIndex)
-            {
-                Debug.Log("Trying to generate player");
-                var p = Instantiate(localPlayer, new Vector3(i * 5, 0, 0), Quaternion.identity);
-                Player geci = p.GetComponent<Player>();
-                geci.playerId = i;
-                geci.name = "LocalPlayer";
-                Debug.Log("Local player created!");
-            }
-            else
-            {
-                Debug.Log("Trying to generate remote player");
-                var p = Instantiate(remotePlayer, new Vector3(i * 5, 0, 0), Quaternion.identity);
-                Mob geci = p.GetComponent<Mob>();
-                geci.playerId = i;
-                geci.name = "Player" + i.ToString();
-            }
-        }
-        Debug.Log("Players set");
-        if (isHost == true)
-        {
-
-            p_Datas = new P_data[numberOfPlayers];
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                //P_datas initialise
-                p_Datas[i] = new P_data(new Vector3(i * 5, 0, 0), new Vector3(0, 0, 0), 50F, i);
-            }
-
-            //Transmit full data
-            string msg = "FullPlayerData:";
-            for (int i = 0; i < numberOfPlayers; i++)
-                msg += p_Datas[i].Generate_SaveString() + ";";
-            TCPClient.instance.Send(msg);
-        }
-        else
-        {
-            p_Datas = playerDatas;
-        }
-        for(int i = 0; i < numberOfPlayers; i++)
-            onPlayerDataUpdate(p_Datas[i], true);
-        
-        Destroy(Gamestart);
-        
-    
-    }
-    public void Set_LocalPlayerInfo(P_data data) 
-    {
-        p_Datas[localPlayerIndex] = data;
-        TCPClient.instance.Send("UpdatePlayerInfo:" + localPlayerIndex.ToString() + ":" + p_Datas[localPlayerIndex].Generate_SaveString());
-    }
-    public void RecieveServerCommand(string msg)
-    {
-        Debug.Log("This");
-        string[] instructions = msg.Split(':');
-        if(instructions[0] == "UpdatePlayerInfo")
-        {
-            p_Datas[Convert.ToInt32(instructions[1])].Set_Values(instructions[2]);
-            onPlayerDataUpdate(p_Datas[Convert.ToInt32(instructions[1])], false);
-        }
-        Debug.Log("This exits");
     }
     void Start()
     {
-        /*
+        isSet = false;
         string[] initalData = TCPClient.Get_Update().Split('|');
         numberOfPlayers = Convert.ToInt32(initalData[0]);
         Debug.Log("The amount of players: " + numberOfPlayers);
@@ -135,7 +56,7 @@ public class GameManager : MonoBehaviour
                 geci.name = "Player" + i.ToString();
             }
         }
-        */
+        isSet = true;
 
         
     }
@@ -143,26 +64,42 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
      void Update()
      {
-        /*Debug.Log("Sending player data!");
-        
-        TCPClient.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString() + "$" + Generate_Attack_Packet());
-        
-        float deltaT = Time.time;
-        string[] data = TCPClient.Get_Update().Split('$');
-        Load_Player_Data(data[0]);
-        //Debug.Log("It took " + (Time.time - deltaT) + " seconds to retrive packet");
-        Render_Attacks(data[1]);
-        //Render_Attacks();
-        */
+        if (isSet == true)
+        {
+            //Debug.Log("Sending player data!");
 
+            TCPClient.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString() + "$" + Generate_Attack_Packet());
+
+            float deltaT = Time.time;
+            string[] data = TCPClient.Get_Update().Split('$');
+            Load_Player_Data(data[0]);
+            //Debug.Log("It took " + (Time.time - deltaT) + " seconds to retrive packet");
+            Render_Attacks(data[1]);
+            //Render_Attacks();
+        }
+        
+        
+     }
+    public static P_data Get_PlayerInfo(int playerIndex){ return p_Datas[playerIndex]; }
+    public static void Set_LocalPlayerInfo(P_data data) { p_Datas[localPlayerIndex] = data; }
+    public static void Attack(Damage dmg) { attacks.Add(dmg); }
+    public static int Get_PlayerIndex()
+    {
+        p++;
+        return p - 1;
     }
-    
-    
-    public  void Attack(Damage dmg) { attacks.Add(dmg); /*Need to do this*/}
-    
 
-    
-    private  string Generate_Attack_Packet()
+    private static void Load_Player_Data(string msg)
+    {
+        string[] data = msg.Split(';');
+        for (int i = 0; i < p_Datas.Length; i++)
+        {
+            //Debug.Log("Setting player" + i + " value: " + data[i]);
+            p_Datas[i].Set_Values(data[i]);
+
+        }
+    }
+    private static string Generate_Attack_Packet()
     {
         string msg = "";
         if (attacks.Count == 0)
@@ -178,7 +115,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    private  void Render_Attacks(string data)
+    private static void Render_Attacks(string data)
     {
         if (data != "nothing")
         {

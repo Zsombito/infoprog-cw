@@ -10,7 +10,6 @@ public class Controlled_Mob : Mob
     protected RaycastHit2D hit;
     //Combat:
     protected float immunityTime;
-    protected float lastMoved;
     protected float lastHit;
     protected float knockbackResistance;
     protected bool isHit;
@@ -20,7 +19,6 @@ public class Controlled_Mob : Mob
     {
         base.Start();
         lastHit = Time.time;
-        lastMoved = Time.time;
         
     }
     protected override void Update()
@@ -29,16 +27,10 @@ public class Controlled_Mob : Mob
         if(isHit == true)
         {
             moveDelta = Knockback(currentHit);
-            GameManager.instance.Set_LocalPlayerInfo(info);
         }
         else
         {
             moveDelta = Get_Control();
-            if(moveDelta != Vector3.zero)
-            {
-                if(Time.time - lastMoved > 0.05F)
-                    GameManager.instance.Set_LocalPlayerInfo(info);
-            }
         }
         moveActual = Vector3.zero;
         hit = Physics2D.BoxCast(mytransform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Blocking"));
@@ -71,7 +63,6 @@ public class Controlled_Mob : Mob
         }
         info.Position = mytransform.position + moveActual;
         info.Direction = moveActual;
-        mytransform.position = info.Position;
     }
     // Update is called once per frame
     public virtual void Hit(Damage dmg)
