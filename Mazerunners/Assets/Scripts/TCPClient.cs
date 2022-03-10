@@ -8,46 +8,75 @@ using System;
 
 public class TCPClient : MonoBehaviour
 {
-    private static TcpClient client;
-    private static Stream networkStream;
-    private static string host;
-    private static int port;
-    private static ASCIIEncoding asen = new ASCIIEncoding();
+    public static TCPClient instance;
+    static Socket client ;
+    public string ip = "192.168.0.14";
+    public int port = 24000;
+    private byte[] buffer = new byte[1024];
+    private ASCIIEncoding asc = new ASCIIEncoding();
+    public event Action<string> onMessageRecieve;
     // Start is called before the first frame update
     private void Start()
     {
-        DontDestroyOnLoad(this);
-        try
-        {
+        Debug.Log("Starting connection");
+        client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        instance = this;
+        Connect(0);
+        Debug.Log("Succesfully connected");
+        //Send("LobbyInfo");
+        client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(MessageRecieve), null);
+        GameStart.instance.First();
+        
 
-            host = "192.168.0.162";
-            port = 24000;
-            client = new TcpClient();
-            client.Connect(host, port);
-            networkStream = client.GetStream();
-            Debug.Log("Connecting");
-
-        }
-        catch (Exception e) { Debug.Log("Connection failed: " + e.StackTrace); }
-    }
-
-    public static string Get_Update()
-    {
-        string s = "";
-        byte[] data_recieved = new byte[250];
-        int k = networkStream.Read(data_recieved, 0, 250);
-        for(int i = 0; i < k; i++)
-        {
-            s += Convert.ToChar(data_recieved[i]);
-        }
-        //Debug.Log("Messege recieved: " + s);
-        return s;
     }
     
-    public static  void Send_Update(string data)
+    private void MessageRecieve(IAsyncResult AR)
     {
-        byte[] encodedMsg = asen.GetBytes(data);
-        networkStream.Write(encodedMsg, 0, encodedMsg.Length);
-       // Debug.Log("Client transmitting!");
+        Debug.Log("Messege recieved");
+        int recieved = client.EndReceive(AR);
+        byte[] rawData = new byte[recieved];
+        Buffer.BlockCopy(buffer, 0, rawData, 0, recieved);
+        string msg = Encoding.ASCII.GetString(rawData);
+        Debug.Log("Server command: " + msg + ", " + recieved);
+        onMessageRecieve(msg);
+        client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(MessageRecieve), null);
+        
+        
     }
+    private void Connect(int attempt)
+    {
+       if(attempt < 10)
+        {
+            try
+            {
+                
+                client.Connect(ip, port);
+
+            }
+            catch
+            {
+                Debug.Log("Failed to connect, attempt:" + attempt);
+                Connect(attempt);
+            }
+            attempt++;
+            
+        }
+    }
+    public void Disconnect()
+    {
+        client.Disconnect(false);
+    }
+    public void Send(string s)
+    {
+        Debug.Log("Sending message: " + s);
+        //client.BeginSend(asc.GetBytes(s), 0, s.Length, SocketFlags.None, new AsyncCallback(FinishSend), null);
+        client.Send(Encoding.ASCII.GetBytes(s));
+        
+    }
+   /* public void FinishSend(IAsyncResult AR)
+    {
+        client.EndSend(AR);
+    }
+   */
+    
 }

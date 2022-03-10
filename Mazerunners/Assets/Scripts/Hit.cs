@@ -42,7 +42,7 @@ public class Hit : Collidable
     {
         base.OnCollide(coll);
         Debug.Log("Trying to hurt");
-        if (coll.name == "LocalPlayer" && damage.owner != GameManager.LocalPlayerIndex)
+        if (coll.name == "LocalPlayer" && damage.owner != GameManager.instance.LocalPlayerIndex)
             player.Hit(damage);
     }
     

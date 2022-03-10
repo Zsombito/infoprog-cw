@@ -15,12 +15,8 @@ public class Mob : Collidable
         base.Start();
         info = new P_data();
         mytransform = GetComponent<Transform>();
-        info.playerId = GameManager.Get_PlayerIndex();
-        playerId = info.playerId;
-        info.Health = 10;
-        info.Position = Vector3.zero;
-        info.Direction = Vector3.zero;
-        Debug.Log("Got index of: " + info.playerId);
+        GameManager.instance.onPlayerDataUpdate += UpdatePlayer;
+        
 
     }
 
@@ -29,12 +25,15 @@ public class Mob : Collidable
         base.Update();
 
     }
-    protected virtual void LateUpdate()
-    {
-        Debug.Log("Getting player update for player" + playerId);
-        info = GameManager.Get_PlayerInfo(playerId);
-        mytransform.position = info.Position;
-        health = info.Health;
+    protected virtual void UpdatePlayer(P_data info, bool isForced)
+    { 
+        if (info.playerId == this.playerId)
+        {
+            Debug.Log("Getting player update for player" + playerId);
+            this.info = info;
+            mytransform.position = info.Position;
+            health = info.Health;
+        }
     }
     protected override void OnCollide(Collider2D coll)
     {

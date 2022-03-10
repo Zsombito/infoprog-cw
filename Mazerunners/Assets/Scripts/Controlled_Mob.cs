@@ -27,10 +27,15 @@ public class Controlled_Mob : Mob
         if(isHit == true)
         {
             moveDelta = Knockback(currentHit);
+            GameManager.instance.Set_LocalPlayerInfo(info);
         }
         else
         {
             moveDelta = Get_Control();
+            if(moveDelta != Vector3.zero)
+            {
+                GameManager.instance.Set_LocalPlayerInfo(info);
+            }
         }
         moveActual = Vector3.zero;
         hit = Physics2D.BoxCast(mytransform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Blocking"));
@@ -63,6 +68,7 @@ public class Controlled_Mob : Mob
         }
         info.Position = mytransform.position + moveActual;
         info.Direction = moveActual;
+        mytransform.position = info.Position;
     }
     // Update is called once per frame
     public virtual void Hit(Damage dmg)

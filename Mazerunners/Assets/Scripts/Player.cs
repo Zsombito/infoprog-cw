@@ -25,13 +25,13 @@ public class Player : Controlled_Mob
     protected override void Update()
     {
         base.Update();
-        GameManager.Set_LocalPlayerInfo(info);
+        
         if(Time.time - lastAttacked >= attackCd)
         {
             if(Input.GetKeyDown(KeyCode.Space))
             {
-                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 2F), facing, 1, 5F, "BulletTest", false, GameManager.LocalPlayerIndex, true);
-                GameManager.Attack(d);
+                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 2F), facing, 1, 5F, "BulletTest", false, GameManager.instance.LocalPlayerIndex, true);
+                GameManager.instance.Attack(d);
             }
         }
         if(Input.GetKeyDown(KeyCode.P))
@@ -42,9 +42,17 @@ public class Player : Controlled_Mob
                 cam.CreateFocus(gameObject);
         }
         
+        
     }
-    
-    
+    protected override void UpdatePlayer(P_data info, bool isForced)
+    {
+        if (isForced == true)
+        {
+            base.UpdatePlayer(info, isForced);
+        }
+    }
+
+
 
 
 }

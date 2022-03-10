@@ -12,8 +12,15 @@ public class P_data
     private Vector3 direction;
     private float health;
     public int playerId;
-    
-    public void Set_Values(Vector3 _pos, Vector3 _dir, int _health)
+    public P_data() { }
+    public P_data(Vector3 _pos, Vector3 _dir, float _health, int playerId)
+    {
+        position = _pos;
+        direction = _dir;
+        health = _health;
+        this.playerId = playerId;
+    }
+    public void Set_Values(Vector3 _pos, Vector3 _dir, float _health)
     {
         position = _pos;
         direction = _dir;
@@ -23,6 +30,7 @@ public class P_data
     {
         Debug.Log("Setting values");
         string[] data = p_save.Split('|');
+        
         position = new Vector3((float)(Convert.ToDouble(data[1])), (float)(Convert.ToDouble(data[2])), (float)(Convert.ToDouble(data[3])));
         direction = new Vector3((float)(Convert.ToDouble(data[4])), (float)(Convert.ToDouble(data[5])), (float)(Convert.ToDouble(data[6])));
         health = (float)Convert.ToDouble(data[7]);
