@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame(bool isHost, int numberOfPlayers, int localPlayerId, P_data[] playerDatas)
     {
+        TCPClient.instance.onMessageRecieve += RecieveServerCommand;
         this.isHost = isHost;
         this.numberOfPlayers = numberOfPlayers;
         this.localPlayerIndex = localPlayerId;
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
         }
         for(int i = 0; i < numberOfPlayers; i++)
             onPlayerDataUpdate(p_Datas[i], true);
-        TCPClient.instance.onMessageRecieve += RecieveServerCommand;
+        
         Destroy(Gamestart);
         
     
@@ -91,12 +92,14 @@ public class GameManager : MonoBehaviour
     }
     public void RecieveServerCommand(string msg)
     {
+        Debug.Log("This");
         string[] instructions = msg.Split(':');
         if(instructions[0] == "UpdatePlayerInfo")
         {
             p_Datas[Convert.ToInt32(instructions[1])].Set_Values(instructions[2]);
             onPlayerDataUpdate(p_Datas[Convert.ToInt32(instructions[1])], false);
         }
+        Debug.Log("This exits");
     }
     void Start()
     {

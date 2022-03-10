@@ -39,6 +39,7 @@ public class TCPClient : MonoBehaviour
         string msg = Encoding.ASCII.GetString(rawData);
         Debug.Log("Server command: " + msg + ", " + recieved);
         onMessageRecieve(msg);
+        Debug.Log("Even executed recieving:");
         client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(MessageRecieve), null);
         
         

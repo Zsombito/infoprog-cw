@@ -145,9 +145,11 @@ namespace TCPServer
                 for(int i = 0; i < currentPlayers; i++)
                 {
                     if (i != Convert.ToInt32(instruction[1]))
-                        players[i].Send(data_recieved);
+                        TCP_Server.Send(instruction[0]+":" + instruction[1] +":"+ instruction[2], players[i]);
                 }
             }
+            client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(InGameCommands), client);
+
         }
         
     }

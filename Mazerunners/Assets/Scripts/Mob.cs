@@ -26,13 +26,17 @@ public class Mob : Collidable
 
     }
     protected virtual void UpdatePlayer(P_data info, bool isForced)
-    { 
+    {
+        Debug.Log("Is: " + info.playerId + " == " + this.playerId);
         if (info.playerId == this.playerId)
         {
             Debug.Log("Getting player update for player" + playerId);
             this.info = info;
-            mytransform.position = info.Position;
+            Debug.Log("Getting player update for player" + info.Position.ToString());
+            transform.position = info.Position;
+            Debug.Log("Getting player update for player" + playerId);
             health = info.Health;
+            Debug.Log("Getting player update for player" + playerId);
         }
     }
     protected override void OnCollide(Collider2D coll)
