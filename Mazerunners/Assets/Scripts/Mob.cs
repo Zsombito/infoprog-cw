@@ -23,6 +23,7 @@ public class Mob : Collidable
     protected override void Update()
     {
         base.Update();
+        mytransform.position = info.Position;
 
     }
     protected virtual void UpdatePlayer(P_data info, bool isForced)
@@ -33,7 +34,7 @@ public class Mob : Collidable
             Debug.Log("Getting player update for player" + playerId);
             this.info = info;
             Debug.Log("Getting player update for player" + info.Position.ToString());
-            transform.position = info.Position;
+            //GetComponent<Transform>().position = info.Position;
             Debug.Log("Getting player update for player" + playerId);
             health = info.Health;
             Debug.Log("Getting player update for player" + playerId);
