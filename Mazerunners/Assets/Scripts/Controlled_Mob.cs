@@ -10,6 +10,7 @@ public class Controlled_Mob : Mob
     protected RaycastHit2D hit;
     //Combat:
     protected float immunityTime;
+    protected float lastMoved;
     protected float lastHit;
     protected float knockbackResistance;
     protected bool isHit;
@@ -19,6 +20,7 @@ public class Controlled_Mob : Mob
     {
         base.Start();
         lastHit = Time.time;
+        lastMoved = Time.time;
         
     }
     protected override void Update()
@@ -34,7 +36,8 @@ public class Controlled_Mob : Mob
             moveDelta = Get_Control();
             if(moveDelta != Vector3.zero)
             {
-                GameManager.instance.Set_LocalPlayerInfo(info);
+                if(Time.time - lastMoved > 0.05F)
+                    GameManager.instance.Set_LocalPlayerInfo(info);
             }
         }
         moveActual = Vector3.zero;
