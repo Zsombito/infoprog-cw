@@ -142,6 +142,6 @@ MonoBehaviour:
   stage: 0
   lastTime: 0
   player: {fileID: 0}
-  speed: 0.5
+  speed: 5
   isBouncy: 0
   isPenetrating: 0
