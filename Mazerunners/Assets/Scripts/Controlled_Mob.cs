@@ -14,17 +14,16 @@ public class Controlled_Mob : Mob
     protected float knockbackResistance;
     protected bool isHit;
     protected Damage currentHit;
-    // Start is called before the first frame update
+
     protected override void Start()
     {
-        base.Start();
+        base.Start(); //All the mob attribute initializastion
         lastHit = Time.time;
-        
     }
     protected override void Update()
     {
         base.Update();
-        if(isHit == true)
+        if(isHit == true) //If it is hit and knocback still holds, it deprives the mob of control and replace is with knockback
         {
             moveDelta = Knockback(currentHit);
         }
@@ -32,12 +31,14 @@ public class Controlled_Mob : Mob
         {
             moveDelta = Get_Control();
         }
-        moveActual = Vector3.zero;
-        hit = Physics2D.BoxCast(mytransform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Blocking"));
 
-        if (hit.collider == null)
+        //Basic hitbox code to not go into solids
+        moveActual = Vector3.zero;
+        hit = Physics2D.BoxCast(mytransform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Blocking")); 
+
+        if (hit.collider == null) //Tries to not go near a palyer in order to avoid glitching together due to lag
         {
-            hit = Physics2D.BoxCast(mytransform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime * 4.5F), LayerMask.GetMask("Player"));
+            hit = Physics2D.BoxCast(mytransform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime * 4.5F), LayerMask.GetMask("Player")); 
             if (hit.collider == null)
                 moveActual.y = moveDelta.y * Time.deltaTime;
             else
@@ -61,21 +62,22 @@ public class Controlled_Mob : Mob
         {
             moveActual.x = 0;
         }
+        //Updates the info of the mob
         info.Position = mytransform.position + moveActual;
         info.Direction = moveActual;
     }
-    // Update is called once per frame
-    public virtual void Hit(Damage dmg)
+    public virtual void Hit(Damage dmg) //Called by a Hit to cause damage to a player
     {
-        if (Time.time - lastHit >= immunityTime)
+        if (Time.time - lastHit >= immunityTime) //If the mob is not currently immune from last attack
         {
-            //Cause dmg
+            //Causing the damage
             Debug.Log("Damage caused");
             info.Health -= dmg.dmgAmount;
             if (info.Health <= 0)
             {
-                Death();
+                Death(); //Needs to be written
             }
+            //Start knockback
             isHit = true;
             lastHit = Time.time;
             Knockback(dmg);
@@ -86,7 +88,7 @@ public class Controlled_Mob : Mob
     public virtual Vector2 Knockback(Damage dmg)
     {
         
-        if (Time.time - lastHit >= 0.3F)
+        if (Time.time - lastHit >= 0.3F) //If knockback is over
         {
             isHit = false;
             currentHit = null;
@@ -94,13 +96,13 @@ public class Controlled_Mob : Mob
             return Vector2.zero;
             
         }
-        else
+        else //Returns the moveDelta vector if active
         {
             Debug.Log("Knocback");
             Vector2 knockBack;
-            if (dmg.direction == Vector2.zero)
+            if (dmg.direction == Vector2.zero) //If its an explosion type with radial knockback
                 knockBack = new Vector2(mytransform.position.x - dmg.origin.x, mytransform.position.y - dmg.origin.y).normalized * dmg.pushForce;
-            else
+            else //If it's like a slash with set direction
                 knockBack = dmg.direction * dmg.pushForce;
             isHit = true;
             
@@ -108,11 +110,11 @@ public class Controlled_Mob : Mob
 
         }
     }
-    protected virtual Vector2 Get_Control()
+    protected virtual Vector2 Get_Control() //Used to set moveDelta with control
     {
         return Vector2.zero;
     }
-    protected virtual void Death()
+    protected virtual void Death() //Not yet written death function
     {
 
     }

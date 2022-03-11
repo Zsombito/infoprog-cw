@@ -8,7 +8,7 @@ public class TravelingHit : Hit
     public RaycastHit2D hit;
     public bool isBouncy;
     public bool isPenetrating;
-    protected override void Update()
+    protected override void Update() //Making the hit travel and detecting if it collides with wall/or something
     {
         base.Update();
         Vector2 moveDelta = Vector2.zero;
@@ -30,7 +30,7 @@ public class TravelingHit : Hit
         transform.position += new Vector3(moveDelta.x, moveDelta.y, 0);
 
     }
-    protected override void OnCollide(Collider2D coll)
+    protected override void OnCollide(Collider2D coll) //Further to hitting player, if it's not penetrating it passes through them
     {
         base.OnCollide(coll);
         if (isPenetrating == false)
