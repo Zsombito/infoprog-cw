@@ -3,6 +3,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace TCPServer
 {
@@ -23,27 +24,31 @@ namespace TCPServer
             Console.WriteLine("Succesfully connected to: " + clients[0].RemoteEndPoint);
             Send_data(clients[0], "Host");
             numberOfPlayers = Convert.ToInt32(Recieve_data(clients[0]));
+            
+            
             Console.WriteLine("Number of Players: " + numberOfPlayers);     
             for (int i = 1; i < numberOfPlayers; i++)
             {
                 
                 clients.Add(myListener.AcceptSocket());
                 Console.WriteLine("Succesfully connected to: " + clients[i].RemoteEndPoint);
+                Send_data(clients[i], "SOmetghinASGasg");
                 
 
             }
             Console.WriteLine("Connected to all players, initial values to players");
+           
             for (int i = 0; i < clients.Count; i++)
             {
-                Send_data(clients[i], (numberOfPlayers.ToString() + "|" + i.ToString()));
 
+                Send_data(clients[i], (numberOfPlayers.ToString() + "|" + i.ToString()));
             }
             while (true)
             {
                 Update_GameState();
             }
         }
-        private static void Update_GameState()
+        private static void Update_GameState()  
         {
             string player_data = "";
             string attack_data = "";
