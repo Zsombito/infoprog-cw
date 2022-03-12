@@ -105,8 +105,11 @@ public class GameManager : MonoBehaviour
         {
             TCPClient.instance.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString() + "$" + Generate_Attack_Packet()); //Sending Local updates to server (local playerdata + attacks created by this client)
             string[] data = TCPClient.instance.Get_Update().Split('$');
-            Load_Player_Data(data[0]); //Setting all the players to the recieved states
-            Render_Attacks(data[1]); //Calling all the recieved attacks to be rendered
+            if (data[0] != "Retry")
+            {
+                Load_Player_Data(data[0]); //Setting all the players to the recieved states
+                Render_Attacks(data[1]); //Calling all the recieved attacks to be rendered
+            }
         }
         
         

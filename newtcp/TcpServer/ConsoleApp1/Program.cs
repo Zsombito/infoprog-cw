@@ -37,34 +37,48 @@ namespace TCPServer
 
             }
             Console.WriteLine("Connected to all players, initial values to players");
-            Thread.Sleep(100);
+            Thread.Sleep(5000);
             for (int i = 0; i < clients.Count; i++)
             {
 
                 Send_data(clients[i], (numberOfPlayers.ToString() + "|" + i.ToString()));
+                clients[i].ReceiveTimeout = 100;
             }
+
             while (true)
             {
+                
                 Update_GameState();
             }
         }
         private static void Update_GameState()  
         {
-            string player_data = "";
-            string attack_data = "";
-            for (int i = 0; i < clients.Count; i++)
+            try
             {
-                string[] data = Recieve_data(clients[i]).Split('$');
-                player_data += data[0] + ";";
-                if (data[1] != "nothing")
-                    attack_data += data[1] + ";";
+                string player_data = "";
+                string attack_data = "";
+                for (int i = 0; i < clients.Count; i++)
+                {
+                    string[] data = Recieve_data(clients[i]).Split('$');
+                    player_data += data[0] + ";";
+                    if (data[1] != "nothing")
+                        attack_data += data[1] + ";";
+                }
+                if (attack_data == "")
+                    attack_data = "nothing";
+                string send_data = player_data + "$" + attack_data;
+                for (int i = 0; i < clients.Count; i++)
+                {
+                    Send_data(clients[i], send_data);
+                }
             }
-            if (attack_data == "")
-                attack_data = "nothing";
-            string send_data = player_data + "$" + attack_data;
-            for (int i = 0; i < clients.Count; i++)
-            {
-                Send_data(clients[i], send_data);
+            catch 
+            { 
+                Console.WriteLine("Failed to sync, retry");
+                for (int i = 0; i < clients.Count; i++)
+                {
+                    Send_data(clients[i], "Retry");
+                }
             }
 
 
