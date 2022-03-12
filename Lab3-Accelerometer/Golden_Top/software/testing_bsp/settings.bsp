@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Mar 3, 2022 3:05:14 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1646319914484</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Mar 12, 2022 3:11:46 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1647097906282</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\Users\User\Documents\GitHub\infoprog-cw\Lab3-Accelerometer\Golden_Top\software\testing_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\maze_accelerometer.sopcinfo</SopcDesignFile>
