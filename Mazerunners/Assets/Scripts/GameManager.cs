@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour
     /* ================================================Class system:==============================================================
      * -Game Handling Classes:
      *    -> 1.TCP Client: Contains the TCP Client for server communication, this is the first to be activated when the game start
-     *    -> 2.Game Manager: Handling everything from starting the game, to send and recieve multiplayer data
-     *    
+     *    -> 2.Game Start: Waiting for the right amount of players joining and then starting the game.
+     *    -> 3.Game Manager: Handling everything from starting the game, to send and recieve multiplayer data
+     *
      * -Data Classes:
      *    -> 1.P_data: containing info needed for mob, to be sent and recieved from and to a server
      *    -> 2.Damage: containing info needed for Hit/Attack, to be sent and recieve from and to a server

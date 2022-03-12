@@ -30,7 +30,7 @@ public class Player : Controlled_Mob
         GameManager.instance.Set_LocalPlayerInfo(info);
         if(Time.time - lastAttacked >= attackCd) //If attack is not on couldown and space is presed cause attack
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if(Input.GetKeyDown(KeyCode.Q))
             {
                 Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 2F), facing, 1, 5F, "BulletTest", false, GameManager.instance.LocalPlayerIndex, true); //Defining the damage type
                 GameManager.instance.Attack(d); //Sending attack to the gamemanager for processing
