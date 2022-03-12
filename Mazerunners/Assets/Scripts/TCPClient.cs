@@ -8,19 +8,21 @@ using System;
 
 public class TCPClient : MonoBehaviour
 {
+    public static TCPClient instance;
     private static TcpClient client;
     private static Stream networkStream;
     private static string host;
     private static int port;
     private static ASCIIEncoding asen = new ASCIIEncoding();
     // Start is called before the first frame update
-    private void Awake()
+    private void Awake() //Connects the TCP Client to the server
     {
         DontDestroyOnLoad(this);
+        instance = this;
         try
         {
 
-            host = "192.168.0.11";
+            host = "146.169.169.54";
             port = 24000;
             client = new TcpClient();
             client.Connect(host, port);
@@ -29,9 +31,14 @@ public class TCPClient : MonoBehaviour
 
         }
         catch (Exception e) { Debug.Log("Connection failed: " + e.StackTrace); }
-    }
 
-    public static string Get_Update()
+        
+    }
+    void Start()
+    {
+        GameStart.instace.isStart = true;   
+    }
+    public string Get_Update() //Function used to recieve server message
     {
         string s = "";
         byte[] data_recieved = new byte[250];
@@ -40,14 +47,14 @@ public class TCPClient : MonoBehaviour
         {
             s += Convert.ToChar(data_recieved[i]);
         }
-        //Debug.Log("Messege recieved: " + s);
+        
         return s;
     }
     
-    public static  void Send_Update(string data)
+    public void Send_Update(string data) //Function used to send string to the server
     {
         byte[] encodedMsg = asen.GetBytes(data);
         networkStream.Write(encodedMsg, 0, encodedMsg.Length);
-       // Debug.Log("Client transmitting!");
+       
     }
 }

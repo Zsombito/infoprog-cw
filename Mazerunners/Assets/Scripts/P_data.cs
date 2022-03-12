@@ -5,21 +5,24 @@ using System;
 
 public class P_data 
 {
-    public Vector3 Position { get { return position; } set { position = value; } }
-    public Vector3 Direction { get { return direction; } set { direction = value; } }
-    public float Health { get { return health; } set { health = value; } }
+    //Data storage class:
     private Vector3 position;
     private Vector3 direction;
     private float health;
     public int playerId;
-    
-    public void Set_Values(Vector3 _pos, Vector3 _dir, int _health)
+
+    //Gets and Sets:
+    public Vector3 Position { get { return position; } set { position = value; } }
+    public Vector3 Direction { get { return direction; } set { direction = value; } }
+    public float Health { get { return health; } set { health = value; } }
+
+    public void Set_Values(Vector3 _pos, Vector3 _dir, int _health) //Set values from code
     {
         position = _pos;
         direction = _dir;
         health = _health;
     }
-    public void Set_Values(string p_save)
+    public void Set_Values(string p_save) //Set values from server message
     {
         Debug.Log("Setting values");
         string[] data = p_save.Split('|');
@@ -27,7 +30,7 @@ public class P_data
         direction = new Vector3((float)(Convert.ToDouble(data[4])), (float)(Convert.ToDouble(data[5])), (float)(Convert.ToDouble(data[6])));
         health = (float)Convert.ToDouble(data[7]);
     }
-    public string Generate_SaveString()
+    public string Generate_SaveString() //Generate string to be sent to the server
     {
         string r = playerId + "|";
         r += position.x + "|" + position.y + "|" + position.z + "|";

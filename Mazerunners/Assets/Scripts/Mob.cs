@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Mob : Collidable
 {
-    public Vector2 position;
+    protected P_data info;//Contains everything which the server needs to know
+    public Vector2 position; 
     public float health;
-    protected P_data info;
     public int playerId;
     protected Transform mytransform;
     
-   protected override void Start()
+   protected override void Start() //Inisiating the data
     {
         base.Start();
         info = new P_data();
         mytransform = GetComponent<Transform>();
-        info.playerId = GameManager.Get_PlayerIndex();
+        info.playerId = GameManager.instance.Get_PlayerIndex();
         playerId = info.playerId;
         info.Health = 10;
         info.Position = Vector3.zero;
@@ -29,10 +29,10 @@ public class Mob : Collidable
         base.Update();
 
     }
-    protected virtual void LateUpdate()
+    protected virtual void LateUpdate() //Calling the GameManager to send the new P_data to move the mob around etc...
     {
         Debug.Log("Getting player update for player" + playerId);
-        info = GameManager.Get_PlayerInfo(playerId);
+        info = GameManager.instance.Get_PlayerInfo(playerId);
         mytransform.position = info.Position;
         health = info.Health;
     }
