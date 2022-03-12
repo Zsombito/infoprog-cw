@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     private  List<Damage> attacks; //All the attacks generated in one tick, this will be sent to the server and also rendered
     private  int localPlayerIndex; //Having the local playewr index is imporant
     private  int p;  //Required for giving the right index to the right P_data
-    bool isSet, isStart; //Needed for smooth game start
+    public bool isSet, isStart; //Needed for smooth game start
     public List<GameObject> players; //All the local and remote players in one List
     public GameObject localPlayer; //Prefab for client
     public GameObject remotePlayer; //Prefab for remote player

@@ -22,7 +22,7 @@ public class TCPClient : MonoBehaviour
         try
         {
 
-            host = "146.169.172.5";
+            host = "146.169.169.54";
             port = 24000;
             client = new TcpClient();
             client.Connect(host, port);
@@ -31,9 +31,13 @@ public class TCPClient : MonoBehaviour
 
         }
         catch (Exception e) { Debug.Log("Connection failed: " + e.StackTrace); }
+
         
     }
-
+    void Start()
+    {
+        GameManager.instance.isStart = true;
+    }
     public string Get_Update() //Function used to recieve server message
     {
         string s = "";
