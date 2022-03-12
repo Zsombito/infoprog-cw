@@ -37,7 +37,7 @@ namespace TCPServer
 
             }
             Console.WriteLine("Connected to all players, initial values to players");
-           
+            Thread.Sleep(100);
             for (int i = 0; i < clients.Count; i++)
             {
 
