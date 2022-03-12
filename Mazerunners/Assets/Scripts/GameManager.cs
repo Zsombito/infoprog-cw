@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour
     /* ================================================Class system:==============================================================
      * -Game Handling Classes:
      *    -> 1.TCP Client: Contains the TCP Client for server communication, this is the first to be activated when the game start
-     *    -> 2.Game Manager: Handling everything from starting the game, to send and recieve multiplayer data
-     *    
+     *    -> 2.Game Start: Waiting for the right amount of players joining and then starting the game.
+     *    -> 3.Game Manager: Handling everything from starting the game, to send and recieve multiplayer data
+     *
      * -Data Classes:
      *    -> 1.P_data: containing info needed for mob, to be sent and recieved from and to a server
      *    -> 2.Damage: containing info needed for Hit/Attack, to be sent and recieve from and to a server
@@ -58,51 +59,58 @@ public class GameManager : MonoBehaviour
      {
         if(isStart == true ) //isStart will be true when the TCP client connects to the server
         {
-            //1. Recieves the ammount of players from the server, and localPlayerIndex
-            string[] initalData = TCPClient.instance.Get_Update().Split('|'); 
-            numberOfPlayers = Convert.ToInt32(initalData[0]);
-            Debug.Log("The amount of players: " + numberOfPlayers);
-
-            //2. Inisializates the Lists, Arrays and
-            p_Datas = new P_data[numberOfPlayers];
-            attacks = new List<Damage>();
-            players = new List<GameObject>();
-            localPlayerIndex = Convert.ToInt32(initalData[1]);
-            Debug.Log("Got local player id: " + localPlayerIndex);
-
-            //3. Generates the players from Prefabs 
-            for (int i = 0; i < p_Datas.Length; i++)
+            try
             {
-                p_Datas[i] = new P_data();
-                Debug.Log("Generating players");
-                Debug.Log("Local player id: " + localPlayerIndex);
+                //1. Recieves the ammount of players from the server, and localPlayerIndex
+                string[] initalData = TCPClient.instance.Get_Update().Split('|');
+                numberOfPlayers = Convert.ToInt32(initalData[0]);
+                Debug.Log("The amount of players: " + numberOfPlayers);
 
-                if (i == localPlayerIndex)
+                //2. Inisializates the Lists, Arrays and
+                p_Datas = new P_data[numberOfPlayers];
+                attacks = new List<Damage>();
+                players = new List<GameObject>();
+                localPlayerIndex = Convert.ToInt32(initalData[1]);
+                Debug.Log("Got local player id: " + localPlayerIndex);
+
+                //3. Generates the players from Prefabs 
+                for (int i = 0; i < p_Datas.Length; i++)
                 {
-                    var p = Instantiate(localPlayer, new Vector3(i * 5, 0, 0), Quaternion.identity);
-                    Player geci = p.GetComponent<Player>();
-                    geci.playerId = i;
-                    geci.name = "LocalPlayer";
-                    Debug.Log("Local player created!");
+                    p_Datas[i] = new P_data();
+                    Debug.Log("Generating players");
+                    Debug.Log("Local player id: " + localPlayerIndex);
+
+                    if (i == localPlayerIndex)
+                    {
+                        var p = Instantiate(localPlayer, new Vector3(i * 5, 0, 0), Quaternion.identity);
+                        Player geci = p.GetComponent<Player>();
+                        geci.playerId = i;
+                        geci.name = "LocalPlayer";
+                        Debug.Log("Local player created!");
+                    }
+                    else
+                    {
+                        var p = Instantiate(remotePlayer, new Vector3(i * 5, 0, 0), Quaternion.identity);
+                        Mob geci = p.GetComponent<Mob>();
+                        geci.playerId = i;
+                        geci.name = "Player" + i.ToString();
+                    }
                 }
-                else
-                {
-                    var p = Instantiate(remotePlayer, new Vector3(i * 5, 0, 0), Quaternion.identity);
-                    Mob geci = p.GetComponent<Mob>();
-                    geci.playerId = i;
-                    geci.name = "Player" + i.ToString();
-                }
+                //Further setup can be added here, and possible parts of this could be moved into a different function for later reuse upon entering different Scenes
+                isSet = true; //sets isSet = true, so normal gameupdates can start
+                isStart = false;
             }
-            //Further setup can be added here, and possible parts of this could be moved into a different function for later reuse upon entering different Scenes
-            isSet = true; //sets isSet = true, so normal gameupdates can start
-            isStart = false;
+            catch { Debug.Log("Waiting"); }
         }
         if (isSet == true)
         {
             TCPClient.instance.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString() + "$" + Generate_Attack_Packet()); //Sending Local updates to server (local playerdata + attacks created by this client)
             string[] data = TCPClient.instance.Get_Update().Split('$');
-            Load_Player_Data(data[0]); //Setting all the players to the recieved states
-            Render_Attacks(data[1]); //Calling all the recieved attacks to be rendered
+            if (data[0] != "Retry")
+            {
+                Load_Player_Data(data[0]); //Setting all the players to the recieved states
+                Render_Attacks(data[1]); //Calling all the recieved attacks to be rendered
+            }
         }
         
         

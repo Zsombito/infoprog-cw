@@ -26,6 +26,7 @@ public class TCPClient : MonoBehaviour
             port = 24000;
             client = new TcpClient();
             client.Connect(host, port);
+            client.ReceiveTimeout = 1000;
             networkStream = client.GetStream();
             Debug.Log("Connecting");
 

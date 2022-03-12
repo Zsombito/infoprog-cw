@@ -34,8 +34,7 @@ public class GameStart : MonoBehaviour
             if (msg == "Host")
             {
                 Debug.Log("I am host");
-                isHost = true;
-                isSet = true;
+                
             }
             else
             {
@@ -71,24 +70,22 @@ public class GameStart : MonoBehaviour
             Destroy(gameObject);
         }
         */
-        
+
     }
     public void StartPressed()
     {
-        Debug.Log("Button pressed and executed!");
-        numberOfPlayers = Convert.ToInt32(input.text);
-        currentPlayers = 1;
+        
+        
         TCPClient.instance.Send_Update(input.text);
-        Destroy(Label1);
-        Destroy(input);
-        Destroy(StartButton);
+        GameManager.instance.isStart = true;
+        Destroy(gameObject);
+        
         /*
         waitTime = Time.time;
         isHost = false;
         Debug.Log("Button pressed and executed!");
         */
-        GameManager.instance.isStart = true;
-        Destroy(gameObject);
+        
 
     }
     
