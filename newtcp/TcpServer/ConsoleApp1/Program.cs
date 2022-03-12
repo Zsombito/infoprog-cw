@@ -8,7 +8,7 @@ namespace TCPServer
 {
     class Program
     {
-        private static TcpListener myListener;
+        private static TcpListener myListener;  
         private static IPAddress ipadr;
         private static ASCIIEncoding asen = new ASCIIEncoding();
         private static List<Socket> clients;
@@ -26,11 +26,10 @@ namespace TCPServer
             Console.WriteLine("Number of Players: " + numberOfPlayers);     
             for (int i = 1; i < numberOfPlayers; i++)
             {
-                for (int j = 0; j < i; j++)
-                    Send_data(clients[j], (i + 1).ToString());
+                
                 clients.Add(myListener.AcceptSocket());
                 Console.WriteLine("Succesfully connected to: " + clients[i].RemoteEndPoint);
-                Send_data(clients[i], (i + 1).ToString() + "/" + numberOfPlayers.ToString());
+                
 
             }
             Console.WriteLine("Connected to all players, initial values to players");
@@ -81,7 +80,7 @@ namespace TCPServer
         {
             byte[] msg = asen.GetBytes(data);
             s.Send(msg);
-            Console.WriteLine("Msg sent");
+            Console.WriteLine("Msg sent to " + s.RemoteEndPoint + ": " + data);
         }
         private static void Start_Server(IPAddress ip, int port)
         {

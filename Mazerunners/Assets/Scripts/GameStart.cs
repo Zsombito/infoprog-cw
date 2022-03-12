@@ -12,6 +12,7 @@ public class GameStart : MonoBehaviour
     public GameObject StartButton;
     public GameObject Label1;
     public GameObject Label2;
+    private float waitTime;
     private int numberOfPlayers, currentPlayers;
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class GameStart : MonoBehaviour
             }
             else
             {
+                /*
                 string[] args = msg.Split('|');
                 isSet = true;
                 Destroy(Label1);
@@ -46,14 +48,19 @@ public class GameStart : MonoBehaviour
                 Label2.GetComponent<Text>().text = "Current Players: " + args[1] + "/" + args[2];
                 currentPlayers = Convert.ToInt32(args[1]);
                 numberOfPlayers = Convert.ToInt32(args[2]);
+                waitTime = Time.time;*/
+                GameManager.instance.isStart = true;
+                Destroy(gameObject);
             }
+
             isStart = false;
         }
+        /*
         else if (isHost == true) { }
-        else if (isSet == true)
+        else if (isSet == true && Time.time - waitTime >= 0.5F)
         {
             Debug.Log("Entering is set!");
-            for(int i = currentPlayers; i < numberOfPlayers; i++)
+            for(int i = currentPlayers; i < numberOfPlayers+1; i++)
             {
                 currentPlayers = Convert.ToInt32(TCPClient.instance.Get_Update());
                 Label2.GetComponent<Text>().text = "Current Players: " + currentPlayers + "/" + numberOfPlayers;
@@ -63,17 +70,26 @@ public class GameStart : MonoBehaviour
             GameManager.instance.isStart = true;
             Destroy(gameObject);
         }
+        */
+        
     }
     public void StartPressed()
     {
-        TCPClient.instance.Send_Update(input.text);
+        Debug.Log("Button pressed and executed!");
         numberOfPlayers = Convert.ToInt32(input.text);
         currentPlayers = 1;
-        Label2.GetComponent<Text>().text = "Current Players: " + currentPlayers + "/" + numberOfPlayers;
+        TCPClient.instance.Send_Update(input.text);
         Destroy(Label1);
         Destroy(input);
         Destroy(StartButton);
+        /*
+        waitTime = Time.time;
         isHost = false;
+        Debug.Log("Button pressed and executed!");
+        */
+        GameManager.instance.isStart = true;
+        Destroy(gameObject);
+
     }
     
 }
