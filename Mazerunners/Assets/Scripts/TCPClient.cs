@@ -36,7 +36,7 @@ public class TCPClient : MonoBehaviour
     }
     void Start()
     {
-        GameManager.instance.isStart = true;
+        GameStart.instace.isStart = true;   
     }
     public string Get_Update() //Function used to recieve server message
     {

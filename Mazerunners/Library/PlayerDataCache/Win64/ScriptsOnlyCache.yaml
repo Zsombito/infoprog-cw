@@ -3,6 +3,7 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - Camera
     - GameManager
+    - GameStart
     - Hit
     - Mob
     - Player
@@ -29,8 +30,14 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
     UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
+    - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -52,26 +59,42 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 2266}
+      Script: {instanceID: 1516}
     - Class: 114
-      Script: {instanceID: 2620}
+      Script: {instanceID: 2206}
     - Class: 114
-      Script: {instanceID: 2998}
+      Script: {instanceID: 2268}
     - Class: 114
-      Script: {instanceID: 3394}
+      Script: {instanceID: 2622}
     - Class: 114
-      Script: {instanceID: 3768}
+      Script: {instanceID: 2782}
     - Class: 114
-      Script: {instanceID: 4890}
+      Script: {instanceID: 3000}
     - Class: 114
-      Script: {instanceID: 5102}
+      Script: {instanceID: 3058}
     - Class: 114
-      Script: {instanceID: 5504}
+      Script: {instanceID: 3244}
     - Class: 114
-      Script: {instanceID: 5548}
+      Script: {instanceID: 3356}
     - Class: 114
-      Script: {instanceID: 5566}
+      Script: {instanceID: 3396}
+    - Class: 114
+      Script: {instanceID: 3770}
+    - Class: 114
+      Script: {instanceID: 4892}
+    - Class: 114
+      Script: {instanceID: 5104}
+    - Class: 114
+      Script: {instanceID: 5506}
+    - Class: 114
+      Script: {instanceID: 5550}
+    - Class: 114
+      Script: {instanceID: 5568}
+    - Class: 114
+      Script: {instanceID: 5606}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -80,6 +103,8 @@ ScriptsOnlyBuild:
     - Class: 212
       Script: {instanceID: 0}
     - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
       Script: {instanceID: 0}
     - Class: 223
       Script: {instanceID: 0}
@@ -668,6 +693,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.IK.Runtime.dll
     namespaceName: UnityEngine.U2D.IK
     className: FabrikSolver2D
+  - hash:
+      serializedVersion: 2
+      Hash: 67504008753c281b84d41132bc6b0f26
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameStart
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

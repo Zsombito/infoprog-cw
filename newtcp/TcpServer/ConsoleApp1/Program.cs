@@ -15,15 +15,23 @@ namespace TCPServer
         private static int numberOfPlayers;
         static void Main(string[] args)
         {
-            numberOfPlayers = 2;
+            
             clients = new List<Socket>();
             ipadr = IPAddress.Parse("146.169.169.54");
             Start_Server(ipadr, 24000);
-
-            for (int i = 0; i < numberOfPlayers; i++)
+            clients.Add(myListener.AcceptSocket());
+            Console.WriteLine("Succesfully connected to: " + clients[0].RemoteEndPoint);
+            Send_data(clients[0], "Host");
+            numberOfPlayers = Convert.ToInt32(Recieve_data(clients[0]));
+            Console.WriteLine("Number of Players: " + numberOfPlayers);     
+            for (int i = 1; i < numberOfPlayers; i++)
             {
+                for (int j = 0; j < i; j++)
+                    Send_data(clients[j], (i + 1).ToString());
                 clients.Add(myListener.AcceptSocket());
                 Console.WriteLine("Succesfully connected to: " + clients[i].RemoteEndPoint);
+                Send_data(clients[i], (i + 1).ToString() + "/" + numberOfPlayers.ToString());
+
             }
             Console.WriteLine("Connected to all players, initial values to players");
             for (int i = 0; i < clients.Count; i++)
