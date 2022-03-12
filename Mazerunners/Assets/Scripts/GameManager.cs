@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     }
      void Update()
      {
-        if(isStart == true) //isStart will be true when the TCP client connects to the server
+        if(isStart == true ) //isStart will be true when the TCP client connects to the server
         {
             //1. Recieves the ammount of players from the server, and localPlayerIndex
             string[] initalData = TCPClient.instance.Get_Update().Split('|'); 
@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
             }
             //Further setup can be added here, and possible parts of this could be moved into a different function for later reuse upon entering different Scenes
             isSet = true; //sets isSet = true, so normal gameupdates can start
+            isStart = false;
         }
         if (isSet == true)
         {
