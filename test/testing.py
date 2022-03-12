@@ -46,7 +46,7 @@ def convert2press(valin,ctrue,cfalse, type):
 def readJtag():
     holdfor3x = []
     holdfor3y = []
-    output = subprocess.Popen('B:\\Quartus\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
+    output = subprocess.Popen('C:\\intelFPGA_lite\\18.1\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
     count = 0
     for i in range(10):
         initial_line = output.stdout.readline()
@@ -54,23 +54,24 @@ def readJtag():
         initial_line = output.stdout.readline()
         initial_line = initial_line.decode("utf8")
         initial_line = initial_line[:initial_line.find("\r\n")]
-        readings = initial_line.split("|",1)
+        readings = initial_line.split("|",2)
         if(len(initial_line)<11 and len(initial_line)>1):
             # print("x =",readings[0], "|| y =",readings[1])
 
             x_data = int(readings[0])
             y_data = int(readings[1])
+           # print(readings[2])
             if(len(holdfor3x)<holdlength):
                 holdfor3x.append(x_data)
             else:
-                print("x ", holdfor3(holdfor3x))
+                #print("x ", holdfor3(holdfor3x))
                 lastx = holdfor3(holdfor3x)
                 holdfor3x = []
                 
             if(len(holdfor3y)<holdlength):
                 holdfor3y.append(y_data)
             else:
-                print("y ", holdfor3(holdfor3y))
+                #print("y ", holdfor3(holdfor3y))
                 lasty = holdfor3(holdfor3y)
                 holdfor3y = []
 
@@ -78,6 +79,8 @@ def readJtag():
             if (count == keyPress):
                 convert2press(lastx, 'a','d', prevx)
                 convert2press(lasty, 'w', 's', prevy)
+                if (int(readings[2])==1):
+                    press('Q')
                 count = 0
                 #while(True): 
                     #try:
