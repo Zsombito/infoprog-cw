@@ -62,39 +62,39 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 622}
     - Class: 114
-      Script: {instanceID: 1514}
+      Script: {instanceID: 1454}
     - Class: 114
-      Script: {instanceID: 2204}
+      Script: {instanceID: 1456}
     - Class: 114
-      Script: {instanceID: 2266}
+      Script: {instanceID: 1518}
     - Class: 114
-      Script: {instanceID: 2620}
+      Script: {instanceID: 2268}
     - Class: 114
-      Script: {instanceID: 2780}
+      Script: {instanceID: 2622}
     - Class: 114
-      Script: {instanceID: 2998}
+      Script: {instanceID: 2782}
     - Class: 114
-      Script: {instanceID: 3056}
+      Script: {instanceID: 3000}
     - Class: 114
-      Script: {instanceID: 3242}
+      Script: {instanceID: 3058}
     - Class: 114
       Script: {instanceID: 3354}
     - Class: 114
       Script: {instanceID: 3394}
     - Class: 114
-      Script: {instanceID: 3768}
+      Script: {instanceID: 3616}
     - Class: 114
-      Script: {instanceID: 5102}
+      Script: {instanceID: 3770}
     - Class: 114
-      Script: {instanceID: 5504}
+      Script: {instanceID: 5104}
     - Class: 114
-      Script: {instanceID: 5548}
+      Script: {instanceID: 5506}
     - Class: 114
-      Script: {instanceID: 5566}
+      Script: {instanceID: 5550}
     - Class: 114
-      Script: {instanceID: 5604}
+      Script: {instanceID: 5568}
     - Class: 114
-      Script: {instanceID: 17028}
+      Script: {instanceID: 5606}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -122,6 +122,18 @@ ScriptsOnlyBuild:
     - Class: 1839735485
       Script: {instanceID: 0}
   scriptHashData:
+  - hash:
+      serializedVersion: 2
+      Hash: 699619b86d9359741a4f58540298c80b
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Text
+  - hash:
+      serializedVersion: 2
+      Hash: 748dd2a2a28da4e618912da5ac45684b
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.EventSystems
+    className: StandaloneInputModule
   - hash:
       serializedVersion: 2
       Hash: 5ab533713adae59372fb3e10a585c186
@@ -224,12 +236,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_StyleSheet
-  - hash:
-      serializedVersion: 2
-      Hash: 699619b86d9359741a4f58540298c80b
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Text
   - hash:
       serializedVersion: 2
       Hash: fddf74b5bfcf6daac8308a1e8f3b642b
@@ -352,12 +358,6 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
-      Hash: 748dd2a2a28da4e618912da5ac45684b
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.EventSystems
-    className: StandaloneInputModule
-  - hash:
-      serializedVersion: 2
       Hash: f7858108331b563fb41b80b729297acd
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -416,6 +416,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: ContentSizeFitter
+  - hash:
+      serializedVersion: 2
+      Hash: d7e9659c5b2984ef1db3918b51545f74
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CamerMotor
   - hash:
       serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
@@ -704,12 +710,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameStart
-  - hash:
-      serializedVersion: 2
-      Hash: d7e9659c5b2984ef1db3918b51545f74
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CamerMotor
   platform: 19
   scenePathNames:
   - Assets/Scenes/Main.unity
