@@ -39,8 +39,9 @@ public class GameManager : MonoBehaviour
     private  int p;  //Required for giving the right index to the right P_data
     public bool isSet, isStart; //Needed for smooth game start
     public List<GameObject> players; //All the local and remote players in one List
-    public GameObject localPlayer; //Prefab for client
-    public GameObject remotePlayer; //Prefab for remote player
+    public GameObject[] playerModels; //Prefab for chars
+    
+    
     private  int numberOfPlayers; 
     //Gets and Sets for private values:
     public  int NumberOfPlayers { get { return numberOfPlayers; } }
@@ -54,6 +55,8 @@ public class GameManager : MonoBehaviour
     {
         isSet = false;
         isStart = false;
+        
+        
     }
      void Update()
      {
@@ -79,19 +82,24 @@ public class GameManager : MonoBehaviour
                     p_Datas[i] = new P_data();
                     Debug.Log("Generating players");
                     Debug.Log("Local player id: " + localPlayerIndex);
+                    var p = Instantiate(playerModels[i], new Vector3(i * 0.32F, 0F, 0F), Quaternion.identity);
+
 
                     if (i == localPlayerIndex)
                     {
-                        var p = Instantiate(localPlayer, new Vector3(i * 5, 0, 0), Quaternion.identity);
-                        Player geci = p.GetComponent<Player>();
+                        
+                        Player geci = new Player();
+                        geci = p.AddComponent<Player>();
                         geci.playerId = i;
                         geci.name = "LocalPlayer";
+                        
                         Debug.Log("Local player created!");
                     }
                     else
                     {
-                        var p = Instantiate(remotePlayer, new Vector3(i * 5, 0, 0), Quaternion.identity);
-                        Mob geci = p.GetComponent<Mob>();
+
+                        Mob geci = new Mob();
+                        geci = p.AddComponent<Mob>();
                         geci.playerId = i;
                         geci.name = "Player" + i.ToString();
                     }

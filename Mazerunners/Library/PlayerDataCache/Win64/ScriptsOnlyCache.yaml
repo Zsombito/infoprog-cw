@@ -1,7 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - Camera
+    - CamerMotor
     - GameManager
     - GameStart
     - Hit
@@ -13,6 +13,7 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
@@ -39,7 +40,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.InputField
     - UnityEngine.UI.Text
   sceneClasses:
-    Assets/Scenes/SampleScene.unity:
+    Assets/Scenes/Main.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -59,39 +60,41 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1518}
+      Script: {instanceID: 622}
     - Class: 114
-      Script: {instanceID: 2208}
+      Script: {instanceID: 1514}
     - Class: 114
-      Script: {instanceID: 2270}
+      Script: {instanceID: 2204}
     - Class: 114
-      Script: {instanceID: 2624}
+      Script: {instanceID: 2266}
     - Class: 114
-      Script: {instanceID: 2784}
+      Script: {instanceID: 2620}
     - Class: 114
-      Script: {instanceID: 3002}
+      Script: {instanceID: 2780}
     - Class: 114
-      Script: {instanceID: 3060}
+      Script: {instanceID: 2998}
     - Class: 114
-      Script: {instanceID: 3246}
+      Script: {instanceID: 3056}
     - Class: 114
-      Script: {instanceID: 3358}
+      Script: {instanceID: 3242}
     - Class: 114
-      Script: {instanceID: 3398}
+      Script: {instanceID: 3354}
     - Class: 114
-      Script: {instanceID: 3772}
+      Script: {instanceID: 3394}
     - Class: 114
-      Script: {instanceID: 4894}
+      Script: {instanceID: 3768}
     - Class: 114
-      Script: {instanceID: 5106}
+      Script: {instanceID: 5102}
     - Class: 114
-      Script: {instanceID: 5508}
+      Script: {instanceID: 5504}
     - Class: 114
-      Script: {instanceID: 5552}
+      Script: {instanceID: 5548}
     - Class: 114
-      Script: {instanceID: 5570}
+      Script: {instanceID: 5566}
     - Class: 114
-      Script: {instanceID: 5608}
+      Script: {instanceID: 5604}
+    - Class: 114
+      Script: {instanceID: 17028}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -109,6 +112,8 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 19719996
       Script: {instanceID: 0}
     - Class: 156049354
       Script: {instanceID: 0}
@@ -437,7 +442,7 @@ ScriptsOnlyBuild:
     className: PlayerQuitHandler
   - hash:
       serializedVersion: 2
-      Hash: a03b43cdc9508f5be04b497f34390782
+      Hash: 85c31e152b545bbaed349c70f2ae0a23
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -699,7 +704,13 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameStart
+  - hash:
+      serializedVersion: 2
+      Hash: d7e9659c5b2984ef1db3918b51545f74
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CamerMotor
   platform: 19
   scenePathNames:
-  - Assets/Scenes/SampleScene.unity
+  - Assets/Scenes/Main.unity
   playerPath: C:/GitHub/infoprog-cw/Mazerunners/Versions/Mazerunners.exe

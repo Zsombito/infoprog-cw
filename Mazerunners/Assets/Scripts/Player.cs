@@ -10,19 +10,19 @@ public class Player : Controlled_Mob
     protected float lastAttacked;
     //Render variables
     protected Vector2 facing;
-    protected Camera cam;
+    //protected CamerMotor cam;
     protected override Vector2 Get_Control() //Reads the inputs and generates moveDelta based on that
     {
         Vector2 direction =  new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (direction != Vector2.zero)
             facing = direction.normalized;
-        return direction * 5F;
+        return direction * 1F;
     }
     protected override void Start()
     {
         base.Start();
         immunityTime = 0.5F;
-        cam = GameObject.Find("Camera").GetComponent<Camera>();
+        GameObject.Find("MainCamera").GetComponent<CamerMotor>().FocusOnPlayer(mytransform);
     }
     protected override void Update() //Checks for further controls
     {
@@ -36,13 +36,13 @@ public class Player : Controlled_Mob
                 GameManager.instance.Attack(d); //Sending attack to the gamemanager for processing
             }
         }
-        if(Input.GetKeyDown(KeyCode.P)) //If key P is pressed toggle's the camera to be centered or to stay in place
+        /*if(Input.GetKeyDown(KeyCode.P)) //If key P is pressed toggle's the camera to be centered or to stay in place
         {
             if (cam.isFocused == true)
                 cam.DeleteFocus();
             else
                 cam.CreateFocus(gameObject);
-        }
+        }*/
         
     }
     
