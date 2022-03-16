@@ -18,7 +18,7 @@ public class Mob : Collidable
         info.playerId = GameManager.instance.Get_PlayerIndex();
         playerId = info.playerId;
         info.Health = 10;
-        info.Position = Vector3.zero;
+        info.Position = mytransform.position;
         info.Direction = Vector3.zero;
         Debug.Log("Got index of: " + info.playerId);
 

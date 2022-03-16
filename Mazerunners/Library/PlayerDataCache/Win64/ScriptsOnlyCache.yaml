@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CamerMotor
+    - ExitMenu
     - GameManager
     - GameStart
     - Hit
@@ -9,6 +10,8 @@ ScriptsOnlyBuild:
     - Player
     - TCPClient
     - TravelingHit
+    - TreasureZone
+    - WinMenu
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
@@ -68,33 +71,39 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1518}
     - Class: 114
-      Script: {instanceID: 2268}
+      Script: {instanceID: 1658}
     - Class: 114
-      Script: {instanceID: 2622}
+      Script: {instanceID: 2270}
     - Class: 114
-      Script: {instanceID: 2782}
+      Script: {instanceID: 2624}
     - Class: 114
-      Script: {instanceID: 3000}
+      Script: {instanceID: 2784}
     - Class: 114
-      Script: {instanceID: 3058}
+      Script: {instanceID: 3002}
     - Class: 114
-      Script: {instanceID: 3354}
+      Script: {instanceID: 3060}
     - Class: 114
-      Script: {instanceID: 3394}
+      Script: {instanceID: 3356}
     - Class: 114
-      Script: {instanceID: 3616}
+      Script: {instanceID: 3396}
     - Class: 114
-      Script: {instanceID: 3770}
+      Script: {instanceID: 3618}
     - Class: 114
-      Script: {instanceID: 5104}
+      Script: {instanceID: 3772}
     - Class: 114
-      Script: {instanceID: 5506}
+      Script: {instanceID: 4356}
     - Class: 114
-      Script: {instanceID: 5550}
+      Script: {instanceID: 5108}
     - Class: 114
-      Script: {instanceID: 5568}
+      Script: {instanceID: 5240}
     - Class: 114
-      Script: {instanceID: 5606}
+      Script: {instanceID: 5512}
+    - Class: 114
+      Script: {instanceID: 5556}
+    - Class: 114
+      Script: {instanceID: 5574}
+    - Class: 114
+      Script: {instanceID: 5612}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -194,6 +203,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: LayoutElement
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: WinMenu
   - hash:
       serializedVersion: 2
       Hash: 6bc76e17f0d5e93f3eea7f5a2fe227f3
@@ -448,7 +463,7 @@ ScriptsOnlyBuild:
     className: PlayerQuitHandler
   - hash:
       serializedVersion: 2
-      Hash: 85c31e152b545bbaed349c70f2ae0a23
+      Hash: ceef55a1f4a4ebca4e352e9a90462906
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -536,6 +551,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ExitMenu
   - hash:
       serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
@@ -640,7 +661,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAsset
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 6bd462fe4d2a36472a8e01985c40cc78
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TCPClient
@@ -650,6 +671,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_ScrollbarEventHandler
+  - hash:
+      serializedVersion: 2
+      Hash: 27e7fbac6138605841a9612044b15adc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TreasureZone
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f

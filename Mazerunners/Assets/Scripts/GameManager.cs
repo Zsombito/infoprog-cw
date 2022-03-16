@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -37,9 +38,14 @@ public class GameManager : MonoBehaviour
     private  List<Damage> attacks; //All the attacks generated in one tick, this will be sent to the server and also rendered
     private  int localPlayerIndex; //Having the local playewr index is imporant
     private  int p;  //Required for giving the right index to the right P_data
-    public bool isSet, isStart; //Needed for smooth game start
+    public bool isSet, isStart, isExit, isWin; //Needed for smooth game start
     public List<GameObject> players; //All the local and remote players in one List
     public GameObject[] playerModels; //Prefab for chars
+    public GameObject exitMenu;
+    public GameObject[] spawnpoints;
+    public GameObject WinMenu;
+    public GameObject WinText;
+    
     
     
     private  int numberOfPlayers; 
@@ -55,6 +61,8 @@ public class GameManager : MonoBehaviour
     {
         isSet = false;
         isStart = false;
+        isExit = false;
+        isWin = false;
         
         
     }
@@ -80,10 +88,12 @@ public class GameManager : MonoBehaviour
                 for (int i = 0; i < p_Datas.Length; i++)
                 {
                     p_Datas[i] = new P_data();
+                    p_Datas[i].Set_Values(spawnpoints[i].transform.position, Vector3.zero, 50);
                     Debug.Log("Generating players");
                     Debug.Log("Local player id: " + localPlayerIndex);
-                    var p = Instantiate(playerModels[i], new Vector3(i * 0.32F, 0F, 0F), Quaternion.identity);
-
+                    var p = Instantiate(playerModels[i], spawnpoints[i].transform.position, Quaternion.identity);
+                    p.transform.position = spawnpoints[i].transform.position;
+                    Destroy(spawnpoints[i]);
 
                     if (i == localPlayerIndex)
                     {
@@ -112,13 +122,31 @@ public class GameManager : MonoBehaviour
         }
         if (isSet == true)
         {
-            TCPClient.instance.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString() + "$" + Generate_Attack_Packet()); //Sending Local updates to server (local playerdata + attacks created by this client)
-            string[] data = TCPClient.instance.Get_Update().Split('$');
-            if (data[0] != "Retry")
+
+            if (isExit == false)
+                TCPClient.instance.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString() + "$" + Generate_Attack_Packet()); //Sending Local updates to server (local playerdata + attacks created by this client)
+            else
+                TCPClient.instance.Send_Update("Exit");
+            string command = TCPClient.instance.Get_Update();
+            string[] data = command.Split('$');
+            for(int i = 0; i < data.Length; i++)
+            {
+                if(data[i] == "Exit")
+                {
+                    Application.Quit();
+                }
+                else if(data[i] == "Win")
+                {
+                    isSet = false;
+                    GameWon(data[i + 1]);
+                }
+            }
+            if (data[0] != "Retry" && data[0] != "Exit")
             {
                 Load_Player_Data(data[0]); //Setting all the players to the recieved states
                 Render_Attacks(data[1]); //Calling all the recieved attacks to be rendered
             }
+            
         }
         
         
@@ -172,6 +200,20 @@ public class GameManager : MonoBehaviour
                     p.GetComponent<TravelingHit>().damage = d; //Or travelling hit
             }
         }
+    }
+    public void MiddleReached()
+    {
+         TCPClient.instance.Send_Update("Win$" + localPlayerIndex);
+    }
+    public void ExitMenu()
+    {
+        exitMenu.SetActive(true);
+    }
+    private void GameWon(string playerIndex)
+    {
+        WinMenu.SetActive(true);
+        WinText.GetComponent<Text>().text = "Player" + playerIndex + " Won!";
+        isWin = true;
     }
     
 

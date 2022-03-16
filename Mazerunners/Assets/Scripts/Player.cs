@@ -32,9 +32,12 @@ public class Player : Controlled_Mob
         {
             if(Input.GetKeyDown(KeyCode.Q))
             {
-                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 2F), facing, 1, 5F, "BulletTest", false, GameManager.instance.LocalPlayerIndex, true); //Defining the damage type
+                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 0.1F), facing, 1, 5F, "BulletTest", false, GameManager.instance.LocalPlayerIndex, true); //Defining the damage type
                 GameManager.instance.Attack(d); //Sending attack to the gamemanager for processing
             }
+            if (Input.GetKeyDown(KeyCode.Escape))
+                GameManager.instance.ExitMenu();
+                
         }
         /*if(Input.GetKeyDown(KeyCode.P)) //If key P is pressed toggle's the camera to be centered or to stay in place
         {

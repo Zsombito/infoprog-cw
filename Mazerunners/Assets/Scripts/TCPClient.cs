@@ -9,11 +9,12 @@ using System;
 public class TCPClient : MonoBehaviour
 {
     public static TCPClient instance;
-    private static TcpClient client;
-    private static Stream networkStream;
-    private static string host;
-    private static int port;
-    private static ASCIIEncoding asen = new ASCIIEncoding();
+    private  TcpClient client;
+    private  Stream networkStream;
+    
+    public string host;
+    private  int port;
+    private  ASCIIEncoding asen = new ASCIIEncoding();
     // Start is called before the first frame update
     private void Awake() //Connects the TCP Client to the server
     {
@@ -22,7 +23,7 @@ public class TCPClient : MonoBehaviour
         try
         {
 
-            host = "146.169.169.54";
+            
             port = 24000;
             client = new TcpClient();
             client.Connect(host, port);
