@@ -13,7 +13,25 @@ public class Player : Controlled_Mob
     //protected CamerMotor cam;
     protected override Vector2 Get_Control() //Reads the inputs and generates moveDelta based on that
     {
-        Vector2 direction =  new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        Vector2 direction = Vector2.zero;
+        if (Input.GetKey(KeyCode.A))
+            direction = new Vector2(-1, 0);
+        else if (Input.GetKey(KeyCode.D))
+            direction = new Vector2(1, 0);
+        else if (Input.GetKey(KeyCode.S))
+            direction = new Vector2(0, -1);
+        else if (Input.GetKey(KeyCode.W))
+            direction = new Vector2(0, 1);
+        if (Input.GetKey(KeyCode.H))
+            direction = new Vector2(-2, 0);
+        else if (Input.GetKey(KeyCode.K))
+            direction = new Vector2(2, 0);
+        else if (Input.GetKey(KeyCode.J))
+            direction = new Vector2(0, -2);
+        else if (Input.GetKey(KeyCode.U))
+            direction = new Vector2(0, 2);
+
+
         if (direction != Vector2.zero)
             facing = direction.normalized;
         return direction * 1F;
