@@ -35,43 +35,43 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   8 .debug_aranges 00000418  00000000  00000000  00002488  2**3
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_info   000053c9  00000000  00000000  000028a0  2**0
+  9 .debug_info   000053d2  00000000  00000000  000028a0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_abbrev 00001d15  00000000  00000000  00007c69  2**0
+ 10 .debug_abbrev 00001d22  00000000  00000000  00007c72  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_line   0000200a  00000000  00000000  0000997e  2**0
+ 11 .debug_line   0000200a  00000000  00000000  00009994  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_frame  00000594  00000000  00000000  0000b988  2**2
+ 12 .debug_frame  00000594  00000000  00000000  0000b9a0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_str    0000196a  00000000  00000000  0000bf1c  2**0
+ 13 .debug_str    00001971  00000000  00000000  0000bf34  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_loc    00001801  00000000  00000000  0000d886  2**0
+ 14 .debug_loc    00001801  00000000  00000000  0000d8a5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_alt_sim_info 00000010  00000000  00000000  0000f088  2**2
+ 15 .debug_alt_sim_info 00000010  00000000  00000000  0000f0a8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_ranges 000002f0  00000000  00000000  0000f098  2**3
+ 16 .debug_ranges 000002f0  00000000  00000000  0000f0b8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 17 .thread_model 00000003  00000000  00000000  000109d2  2**0
+ 17 .thread_model 00000003  00000000  00000000  000109f2  2**0
                   CONTENTS, READONLY
- 18 .cpu          00000003  00000000  00000000  000109d5  2**0
+ 18 .cpu          00000003  00000000  00000000  000109f5  2**0
                   CONTENTS, READONLY
- 19 .qsys         00000001  00000000  00000000  000109d8  2**0
+ 19 .qsys         00000001  00000000  00000000  000109f8  2**0
                   CONTENTS, READONLY
- 20 .simulation_enabled 00000001  00000000  00000000  000109d9  2**0
+ 20 .simulation_enabled 00000001  00000000  00000000  000109f9  2**0
                   CONTENTS, READONLY
- 21 .stderr_dev   00000009  00000000  00000000  000109da  2**0
+ 21 .stderr_dev   00000009  00000000  00000000  000109fa  2**0
                   CONTENTS, READONLY
- 22 .stdin_dev    00000009  00000000  00000000  000109e3  2**0
+ 22 .stdin_dev    00000009  00000000  00000000  00010a03  2**0
                   CONTENTS, READONLY
- 23 .stdout_dev   00000009  00000000  00000000  000109ec  2**0
+ 23 .stdout_dev   00000009  00000000  00000000  00010a0c  2**0
                   CONTENTS, READONLY
- 24 .sopc_system_name 00000012  00000000  00000000  000109f5  2**0
+ 24 .sopc_system_name 00000012  00000000  00000000  00010a15  2**0
                   CONTENTS, READONLY
- 25 .quartus_project_dir 00000048  00000000  00000000  00010a07  2**0
+ 25 .quartus_project_dir 00000048  00000000  00000000  00010a27  2**0
                   CONTENTS, READONLY
- 26 .jdi          00005009  00000000  00000000  00010a4f  2**0
+ 26 .jdi          00005009  00000000  00000000  00010a6f  2**0
                   CONTENTS, READONLY
- 27 .sopcinfo     00049bca  00000000  00000000  00015a58  2**0
+ 27 .sopcinfo     00049bca  00000000  00000000  00015a78  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 00010000 l    d  .entry	00000000 .entry
@@ -839,7 +839,7 @@ void timer_init(void * isr) {
    10320:	f800283a 	ret
 
 00010324 <main>:
-	//alt_32 z_read;
+	alt_32 z_read;
 	alt_u8 sw;
 	alt_u8 button;
 
@@ -853,7 +853,7 @@ void timer_init(void * isr) {
 
 int main() {
    10328:	defff704 	addi	sp,sp,-36
-	//alt_32 z_read;
+	alt_32 z_read;
 	alt_u8 sw;
 	alt_u8 button;
 
@@ -873,7 +873,7 @@ int main() {
    10340:	dc800415 	stw	r18,16(sp)
    10344:	dc400315 	stw	r17,12(sp)
    10348:	dc000215 	stw	r16,8(sp)
-	//alt_32 z_read;
+	alt_32 z_read;
 	alt_u8 sw;
 	alt_u8 button;
 
@@ -962,15 +962,15 @@ int main() {
 		//alt_printf("X AXIS = %x || Y AXIS = %x || Z AXIS = %x \n",movingAVG2(x_read),movingAVG2(y_read),movingAVG2(z_read));
 		if ((sw & 0x01)==1){
    103a4:	803ff426 	beq	r16,zero,10378 <__alt_data_end+0xffff0378>
-		   printf("%d|%d|%d\n",movingAVGx(x_read),movingAVGy(y_read), button==1 );
+		   printf("%d|%d|%d\n",movingAVGx(x_read),movingAVGy(y_read),((button&0x01) == 0));
    103a8:	d9000117 	ldw	r4,4(sp)
    103ac:	00101f40 	call	101f4 <movingAVGx>
    103b0:	d9000017 	ldw	r4,0(sp)
    103b4:	1021883a 	mov	r16,r2
    103b8:	00102540 	call	10254 <movingAVGy>
-   103bc:	89c03fcc 	andi	r7,r17,255
+   103bc:	89c0004c 	andi	r7,r17,1
    103c0:	01000074 	movhi	r4,1
-   103c4:	39c00060 	cmpeqi	r7,r7,1
+   103c4:	39c0005c 	xori	r7,r7,1
    103c8:	100d883a 	mov	r6,r2
    103cc:	800b883a 	mov	r5,r16
    103d0:	2104b004 	addi	r4,r4,4800
