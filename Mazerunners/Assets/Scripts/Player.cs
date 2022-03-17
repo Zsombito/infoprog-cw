@@ -32,7 +32,7 @@ public class Player : Controlled_Mob
         {
             if(Input.GetKeyDown(KeyCode.Q))
             {
-                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 0.3F), facing, 1, 5F, "BulletTest", false, GameManager.instance.LocalPlayerIndex, true); //Defining the damage type
+                Damage d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 0.5F), facing, 1, 5F, "BulletTest", false, GameManager.instance.LocalPlayerIndex, true); //Defining the damage type
                 GameManager.instance.Attack(d); //Sending attack to the gamemanager for processing
             }
             if (Input.GetKeyDown(KeyCode.Escape))
