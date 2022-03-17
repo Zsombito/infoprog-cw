@@ -9,6 +9,10 @@ public class Mob : Collidable
     public float health;
     public int playerId;
     protected Transform mytransform;
+    protected Vector3 previousLocation;
+    public Animator animator;
+    protected bool isAttack = false;
+    protected float lastAttack;
     
    protected override void Start() //Inisiating the data
     {
@@ -21,7 +25,8 @@ public class Mob : Collidable
         info.Position = mytransform.position;
         info.Direction = Vector3.zero;
         Debug.Log("Got index of: " + info.playerId);
-
+        previousLocation = info.Position;
+        animator = gameObject.GetComponent<Animator>();
     }
 
     protected override void Update()
@@ -38,7 +43,25 @@ public class Mob : Collidable
             Debug.Log(playerId + " got the position of: " + info.Position);
             mytransform.position = info.Position;
             health = info.Health;
+            
         }
+        if ((info.Position - previousLocation).x < 0)
+            mytransform.localScale = new Vector3(1, 1, 1);
+        else
+            mytransform.localScale = new Vector3(-1, 1, 1);
+        Debug.Log((info.Position - previousLocation).magnitude);
+        animator.SetFloat("Speed", (info.Position - previousLocation).magnitude);
+        if (GameManager.instance.isAttacking[playerId])
+        {
+            animator.SetBool("Attack", true);
+            lastAttack = Time.time;
+            GameManager.instance.isAttacking[playerId] = false;
+        }
+        if (Time.time - lastAttack >= 0.3F)
+            animator.SetBool("Attack", false);
+
+        previousLocation = info.Position;
+        
     }
     protected override void OnCollide(Collider2D coll)
     {

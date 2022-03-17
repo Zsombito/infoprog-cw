@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] spawnpoints;
     public GameObject WinMenu;
     public GameObject WinText;
-    
+    public bool[] isAttacking = { false, false, false, false };
     
     
     private  int numberOfPlayers; 
@@ -193,7 +193,9 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < dataAttacks.Length; i++)
             {
                 Damage d = new Damage(dataAttacks[i]);
+                
                 GameObject obj = Resources.Load<GameObject>("Prefabs/" + d.type); //Searching the created Hit from the prefabs
+                isAttacking[d.owner] = true;
                 var p = Instantiate(obj, d.origin, Quaternion.identity);
                 if (d.isTravelling == false)
                     p.GetComponent<Hit>().damage = d; //Determines weather stationary
