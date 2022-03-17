@@ -122,12 +122,13 @@ public class GameManager : MonoBehaviour
         }
         if (isSet == true)
         {
-
+            float Time_delay = Time.time;
             if (isExit == false)
                 TCPClient.instance.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString() + "$" + Generate_Attack_Packet()); //Sending Local updates to server (local playerdata + attacks created by this client)
             else
                 TCPClient.instance.Send_Update("Exit");
             string command = TCPClient.instance.Get_Update();
+            Debug.Log("Latency is: " + ((Time.time - Time_delay) * 1000));
             string[] data = command.Split('$');
             for(int i = 0; i < data.Length; i++)
             {

@@ -65,6 +65,7 @@ public class Controlled_Mob : Mob
         //Updates the info of the mob
         info.Position = mytransform.position + moveActual;
         info.Direction = moveActual;
+        mytransform.position = info.Position;
     }
     public virtual void Hit(Damage dmg) //Called by a Hit to cause damage to a player
     {

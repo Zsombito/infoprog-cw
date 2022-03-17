@@ -31,11 +31,14 @@ public class Mob : Collidable
     }
     protected virtual void LateUpdate() //Calling the GameManager to send the new P_data to move the mob around etc...
     {
-        Debug.Log("Getting player update for player" + playerId);
-        info = GameManager.instance.Get_PlayerInfo(playerId);
-        Debug.Log(playerId + " got the position of: " + info.Position);
-        mytransform.position = info.Position;
-        health = info.Health;
+        if (playerId != GameManager.instance.LocalPlayerIndex)
+        {
+            Debug.Log("Getting player update for player" + playerId);
+            info = GameManager.instance.Get_PlayerInfo(playerId);
+            Debug.Log(playerId + " got the position of: " + info.Position);
+            mytransform.position = info.Position;
+            health = info.Health;
+        }
     }
     protected override void OnCollide(Collider2D coll)
     {
