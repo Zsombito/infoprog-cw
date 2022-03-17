@@ -14,7 +14,8 @@ public class Player : Controlled_Mob
     protected override Vector2 Get_Control() //Reads the inputs and generates moveDelta based on that
     {
         Vector2 direction =  new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        facing = direction.normalized;
+        if(direction != Vector2.zero)
+            facing = direction.normalized;
         if (Input.GetKey(KeyCode.F))
             return direction * 2F;
         else
