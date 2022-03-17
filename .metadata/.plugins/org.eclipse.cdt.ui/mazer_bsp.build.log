@@ -1,0 +1,6 @@
+17:07:34 **** Clean-only build of configuration Nios II for project mazer_bsp ****
+make clean 
+[BSP clean complete]
+
+17:07:38 Build Finished (took 3s.380ms)
+

@@ -4,7 +4,7 @@
  * Machine generated for CPU 'cpu' in SOPC Builder design 'maze_accelerometer'
  * SOPC Builder design path: ../../maze_accelerometer.sopcinfo
  *
- * Generated: Mon Feb 28 13:30:26 GMT 2022
+ * Generated: Thu Mar 17 16:58:26 GMT 2022
  */
 
 /*

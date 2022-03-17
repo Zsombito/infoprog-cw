@@ -46,7 +46,7 @@ def convert2press(valin,ctrue,cfalse, type):
 def readJtag():
     holdfor3x = []
     holdfor3y = []
-    output = subprocess.Popen('C:\\intelFPGA_lite\\18.1\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
+    output = subprocess.Popen('C:\\intelFPGA_lite\\18.0\\quartus\\bin64\\nios2-terminal.exe', shell=True, stdout=subprocess.PIPE)
     count = 0
     for i in range(10):
         initial_line = output.stdout.readline()
@@ -54,6 +54,7 @@ def readJtag():
         initial_line = output.stdout.readline()
         initial_line = initial_line.decode("utf8")
         initial_line = initial_line[:initial_line.find("\r\n")]
+        print(initial_line)
         readings = initial_line.split("|",2)
         if(len(initial_line)<11 and len(initial_line)>1):
             # print("x =",readings[0], "|| y =",readings[1])
