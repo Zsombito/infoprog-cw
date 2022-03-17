@@ -49,7 +49,7 @@ public class TCPClient : MonoBehaviour
         {
             s += Convert.ToChar(data_recieved[i]);
         }
-        
+        Debug.Log("Msg recieved:" + s);
         return s;
     }
     

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "pKDfGtPHwPN6AcMLoFpdn7kwY8EWg6l0c8qLzX8z2Yw03oSkddX8PDe8snKGoXYOOgRWVyeYGvKNBrnL24Rdcw==",
+  "success": true,
+  "projectFilePath": "C:\\GitHub\\infoprog-cw\\newtcp\\TcpServer\\ConsoleApp1\\ConsoleApp1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.netcore.app.host.linux-x64\\3.1.22\\microsoft.netcore.app.host.linux-x64.3.1.22.nupkg.sha512"
+  ],
+  "logs": []
+}

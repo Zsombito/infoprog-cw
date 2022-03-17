@@ -1,0 +1,5 @@
+C:\GitHub\infoprog-cw\newtcp\TcpServer\ConsoleApp1\bin\Release\netcoreapp3.1\publish\ConsoleApp1
+C:\GitHub\infoprog-cw\newtcp\TcpServer\ConsoleApp1\bin\Release\netcoreapp3.1\publish\ConsoleApp1.dll
+C:\GitHub\infoprog-cw\newtcp\TcpServer\ConsoleApp1\bin\Release\netcoreapp3.1\publish\ConsoleApp1.deps.json
+C:\GitHub\infoprog-cw\newtcp\TcpServer\ConsoleApp1\bin\Release\netcoreapp3.1\publish\ConsoleApp1.runtimeconfig.json
+C:\GitHub\infoprog-cw\newtcp\TcpServer\ConsoleApp1\bin\Release\netcoreapp3.1\publish\ConsoleApp1.pdb

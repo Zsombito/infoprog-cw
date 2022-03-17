@@ -86,7 +86,7 @@ namespace TCPServer
                     {
                         for(int j = 0; j < clients.Count; j++)
                         {
-                            Send_data(clients[i], "$Exit");
+                            Send_data(clients[j], "$Exit");
                         }
                         Thread.Sleep(1000);
                         TerminateConnections();
@@ -96,7 +96,7 @@ namespace TCPServer
                     {
                         for (int j = 0; j < clients.Count; j++)
                         {
-                            Send_data(clients[i],data[0] + "$"+ data[1]);
+                            Send_data(clients[j],data[0] + "$"+ data[1]);
                         }
                         Thread.Sleep(2000);
                         TerminateConnections();

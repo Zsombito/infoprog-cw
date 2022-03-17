@@ -33,6 +33,7 @@ public class Mob : Collidable
     {
         Debug.Log("Getting player update for player" + playerId);
         info = GameManager.instance.Get_PlayerInfo(playerId);
+        Debug.Log(playerId + " got the position of: " + info.Position);
         mytransform.position = info.Position;
         health = info.Health;
     }
