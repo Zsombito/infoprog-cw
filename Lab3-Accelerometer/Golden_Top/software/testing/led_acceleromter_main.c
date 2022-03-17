@@ -103,7 +103,7 @@ int main() {
 		//alt_up_accelerometer_spi_read_z_axis(acc_dev, & z_read);
 		//alt_printf("X AXIS = %x || Y AXIS = %x || Z AXIS = %x \n",movingAVG2(x_read),movingAVG2(y_read),movingAVG2(z_read));
 		if ((sw & 0x01)==1){
-		   printf("%d|%d\n",movingAVGx(x_read),movingAVGy(y_read));
+		   printf("%d|%d|%d\n",movingAVGx(x_read),movingAVGy(y_read),(button&0x01 == 0));
 		}
 
 		//alt_printf("%x\n",y_read);
