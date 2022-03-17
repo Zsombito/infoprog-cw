@@ -137,11 +137,11 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   sprites: []
-  lasting: 10
+  lasting: 3
   maxStages: 1
   stage: 0
   lastTime: 0
   player: {fileID: 0}
-  speed: 5
+  speed: 2.5
   isBouncy: 0
   isPenetrating: 0
