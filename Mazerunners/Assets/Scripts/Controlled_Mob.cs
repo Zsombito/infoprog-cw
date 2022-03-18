@@ -78,10 +78,13 @@ public class Controlled_Mob : Mob
             {
                 Death(); //Needs to be written
             }
-            //Start knockback
-            isHit = true;
-            lastHit = Time.time;
-            Knockback(dmg);
+            else
+            {
+                //Start knockback
+                isHit = true;
+                lastHit = Time.time;
+                Knockback(dmg);
+            }
             
         }
         currentHit = dmg;

@@ -24,15 +24,16 @@ public class Hit : Collidable
     protected override void Update()
     {
         base.Update(); //Hitbox detection
-        if (stage == maxStages) //Detecting when the hit will be over
+        if (Time.time - lastTime >= lasting) //Detecting when the hit will be over
             GameObject.Destroy(gameObject);
 
-        if(Time.time - lastTime >= (float)(lasting / maxStages)) //Basic animation
+        /*if(Time.time - lastTime >= (float)(lasting / maxStages)) //Basic animation
         {
             stage++;
             lastTime = Time.time;
             render.sprite = sprites[stage];
         }
+        */
     }
     protected override void OnCollide(Collider2D coll)
     {

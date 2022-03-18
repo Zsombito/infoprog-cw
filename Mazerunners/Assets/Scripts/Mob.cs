@@ -13,7 +13,7 @@ public class Mob : Collidable
     public Animator animator;
     protected bool isAttack = false;
     protected float lastAttack;
-    
+    protected Vector3 spawnpoint;
    protected override void Start() //Inisiating the data
     {
         base.Start();
@@ -23,6 +23,7 @@ public class Mob : Collidable
         playerId = info.playerId;
         info.Health = 10;
         info.Position = mytransform.position;
+        spawnpoint = mytransform.position;
         info.Direction = Vector3.zero;
         Debug.Log("Got index of: " + info.playerId);
         previousLocation = info.Position;

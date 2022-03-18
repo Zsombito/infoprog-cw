@@ -33,7 +33,11 @@ public class TravelingHit : Hit
     protected override void OnCollide(Collider2D coll) //Further to hitting player, if it's not penetrating it passes through them
     {
         base.OnCollide(coll);
-        if (isPenetrating == false && (!coll.name.StartsWith("B") || !coll.name.EndsWith(damage.owner.ToString()))) 
+        Debug.LogError(coll.name);
+        if (!(coll.name.StartsWith("B") || coll.name.EndsWith(damage.owner.ToString()) || coll.name == "LocalPlayer"))
+        {
+            Debug.Log("Execute bullet");
             GameObject.Destroy(gameObject);
+        }
     }
 }
