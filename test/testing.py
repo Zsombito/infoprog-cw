@@ -2,11 +2,11 @@ from mimetypes import init
 from stat import IO_REPARSE_TAG_MOUNT_POINT
 from pyautogui import press, keyUp, keyDown
 import pyautogui
-pyautogui.PAUSE = 0.000001
+pyautogui.PAUSE = 0.00000001
 import subprocess
 import time
 
-threshold = 100
+threshold = 50
 holdlength = 3
 lastx = -99
 lasty = -88
@@ -15,6 +15,8 @@ keyPress = 200
 
 prevx = 0
 prevy = 0
+prevx_shift = 0
+prevy_shift = 0
 
 def holdfor3(val3):
     sum=0
@@ -22,26 +24,37 @@ def holdfor3(val3):
     for i in val3:
         sum +=i
     avg = sum/len(val3)
-    if avg > threshold:
+    if avg > (4*threshold):
+        return (2)
+    elif avg < (-4*threshold):
+        return (-2)
+    elif avg > threshold:
         return (1)
     elif avg < (-1*threshold):
         return (-1)
     else:
         return (0)
     
-def convert2press(valin,ctrue,cfalse, type):
-    if(valin == 1 and type != 1):
-        type = 1
-        keyDown(ctrue)
-        keyUp(cfalse)
-    elif (valin == -1 and type != -1):
-        type = -1
-        keyDown(cfalse)
-        keyUp(ctrue)
-    elif (valin == 0 and type != 0):
-        type = 0
-        keyUp(ctrue)
-        keyUp(cfalse)
+def convert2press(valin,cpos,cneg, shift, valin_prev, valshift_prev):
+    if(valin == 1 and valin_prev != 1):
+        valin_prev = 1
+        keyDown(cpos)
+        keyUp(cneg)
+    elif (valin == -1 and valin_prev != -1):
+        valin_prev = -1
+        keyUp(cpos)
+        keyDown(cneg)
+    elif (valin == 0):
+        valin_prev = 0
+        keyUp(cneg)
+        keyUp(cpos)
+
+    if((valin == 2 or valin == -2) and valshift_prev != 1):
+        valshift_prev = 1
+        keyDown(shift)
+    elif (valin != 2 and valin != -2):
+        valshift_prev = 0
+        keyUp(shift)
 
 def readJtag():
     holdfor3x = []
@@ -77,8 +90,8 @@ def readJtag():
 
             count+=1 
             if (count == keyPress):
-                convert2press(lastx, 'a','d', prevx)
-                convert2press(lasty, 'w', 's', prevy)
+                convert2press(lastx, 'a','d', 'f', prevx, prevx_shift)
+                convert2press(lasty, 's', 'w', 'f',prevy, prevy_shift)
                 if (int(readings[2])==1):
                     press('Q')
                 count = 0
@@ -89,7 +102,7 @@ def readJtag():
                         #break
         
 
-        #print(type(initial_line))
+        #print(valin_prev(initial_line))
         #print(len(initial_line)
         #time.sleep(0.0001)
         
