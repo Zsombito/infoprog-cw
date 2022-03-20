@@ -27,13 +27,13 @@ public class Player : Controlled_Mob
         base.Start();
         immunityTime = 0.2F;
         if (playerId == 0)
-            attackCd = 0.1F;
+            attackCd = 0.5F;
         else if (playerId == 1)
-            attackCd = 0.05F;
+            attackCd = 0.5F;
         else if (playerId == 2)
-            attackCd = 0.5F;
+            attackCd = 1.5F;
         else if (playerId == 3)
-            attackCd = 0.5F;
+            attackCd = 2.5F;
         
         GameObject.Find("MainCamera").GetComponent<CamerMotor>().FocusOnPlayer(mytransform);
     }
@@ -41,7 +41,7 @@ public class Player : Controlled_Mob
     {
         base.Update();
         GameManager.instance.Set_LocalPlayerInfo(info);
-        if(Time.time - lastAttacked >= attackCd) //If attack is not on couldown and space is presed cause attack
+        if(Time.time - lastAttacked >= attackCd && isHit == false) //If attack is not on couldown and space is presed cause attack
         {
             if(Input.GetKey(KeyCode.Q))
             {
@@ -59,10 +59,11 @@ public class Player : Controlled_Mob
                     d = new Damage(new Vector2(transform.position.x, transform.position.y) + (facing * 0.5F), facing, 20, 5F, "BOrcBullet", false, GameManager.instance.LocalPlayerIndex, true);
                 numberOfAttacks++;
                 GameManager.instance.Attack(d); //Sending attack to the gamemanager for processing
+                lastAttacked = Time.time;
             }
             if (Input.GetKeyDown(KeyCode.Escape))
                 GameManager.instance.ExitMenu();
-                
+            
         }
         /*if(Input.GetKeyDown(KeyCode.P)) //If key P is pressed toggle's the camera to be centered or to stay in place
         {

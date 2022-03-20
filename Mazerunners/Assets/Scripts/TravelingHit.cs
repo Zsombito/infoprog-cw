@@ -34,7 +34,7 @@ public class TravelingHit : Hit
     {
         base.OnCollide(coll);
         Debug.LogError(coll.name);
-        if (!(coll.name.StartsWith("B") || coll.name.EndsWith(damage.owner.ToString()) || coll.name == "LocalPlayer"))
+        if (!(coll.name.StartsWith("B") || coll.name.EndsWith(damage.owner.ToString()) || (damage.owner == GameManager.instance.LocalPlayerIndex && coll.name == "LocalPlayer")))   
         {
             Debug.Log("Execute bullet");
             GameObject.Destroy(gameObject);

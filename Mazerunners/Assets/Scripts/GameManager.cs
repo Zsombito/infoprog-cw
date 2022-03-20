@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] spawnpoints;
     public GameObject WinMenu;
     public GameObject WinText;
+    public GameObject StartMenu;
     public bool[] isAttacking = { false, false, false, false };
     
     
@@ -76,7 +77,7 @@ public class GameManager : MonoBehaviour
                 string[] initalData = TCPClient.instance.Get_Update().Split('|');
                 numberOfPlayers = Convert.ToInt32(initalData[0]);
                 Debug.Log("The amount of players: " + numberOfPlayers);
-
+                
                 //2. Inisializates the Lists, Arrays and
                 p_Datas = new P_data[numberOfPlayers];
                 attacks = new List<Damage>();
@@ -122,6 +123,7 @@ public class GameManager : MonoBehaviour
         }
         if (isSet == true)
         {
+            Destroy(StartMenu);
             float Time_delay = Time.time;
             if (isExit == false)
                 TCPClient.instance.Send_Update(p_Datas[localPlayerIndex].Generate_SaveString() + "$" + Generate_Attack_Packet()); //Sending Local updates to server (local playerdata + attacks created by this client)

@@ -475,7 +475,7 @@ ScriptsOnlyBuild:
     className: PlayerQuitHandler
   - hash:
       serializedVersion: 2
-      Hash: 428a6245a1fe60d9fdaf9f36e4acca5a
+      Hash: b6e2fabe4713506ae2085848f184dfbb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -745,7 +745,7 @@ ScriptsOnlyBuild:
     className: FabrikSolver2D
   - hash:
       serializedVersion: 2
-      Hash: 67504008753c281b84d41132bc6b0f26
+      Hash: aeff50a19ddb2177eaf8c7c76b4ba244
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameStart

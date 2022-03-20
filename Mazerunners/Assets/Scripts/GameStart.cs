@@ -12,6 +12,7 @@ public class GameStart : MonoBehaviour
     public GameObject StartButton;
     public GameObject Label1;
     public GameObject Label2;
+    public GameObject[] buttonmenuthing;
     private float waitTime;
     private int numberOfPlayers, currentPlayers;
     private void Awake()
@@ -49,7 +50,8 @@ public class GameStart : MonoBehaviour
                 numberOfPlayers = Convert.ToInt32(args[2]);
                 waitTime = Time.time;*/
                 GameManager.instance.isStart = true;
-                Destroy(gameObject);
+                for (int i = 0; i < buttonmenuthing.Length; i++)
+                    buttonmenuthing[i].SetActive(false);
             }
 
             isStart = false;
@@ -78,14 +80,15 @@ public class GameStart : MonoBehaviour
         
         TCPClient.instance.Send_Update(input.text);
         GameManager.instance.isStart = true;
-        Destroy(gameObject);
-        
+        for (int i = 0; i < buttonmenuthing.Length; i++)
+            buttonmenuthing[i].SetActive(false);
+
         /*
         waitTime = Time.time;
         isHost = false;
         Debug.Log("Button pressed and executed!");
         */
-        
+
 
     }
     
